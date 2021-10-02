@@ -1,0 +1,28 @@
+import wollok.game.*
+import hector.*
+import cultivos.*
+
+program farmville {
+	//  CONFIG	
+	game.title("La granja de Héctor")
+	game.height(20)
+	game.width(20)
+	game.ground("ground.png")
+
+	//  VISUALES
+ 	game.addVisualCharacter(hector)
+ 	game.addVisual(new Maiz(position = game.at(1,1) // Se agrega a modo de prueba
+ 	//no hace falta referenciar al objeto maiz, el "game"
+ 	//sabe donde está el maíz, pero tengo que darle una posicion
+	
+	//Teclado	
+	keyboard.m().onPressDo({ hector.sembrarMaiz() })
+	keyboard.t().onPressDo({ hector.sembrarTrigo() })
+	keyboard.o().onPressDo({ hector.sembrarTomaco() })
+	keyboard.r().onPressDo({ hector.regarCultivosDebajo() })
+ 	keyboard.c().onPressDo({ hector.cosechar() })
+ 	keyboard.v().onPressDo({ hector.vender() })
+ 	keyboard.space().onPressDo({ hector.finanzas() })
+ 	//  COMIENZA
+	game.start()
+}
