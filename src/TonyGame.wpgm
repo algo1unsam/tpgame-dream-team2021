@@ -1,0 +1,32 @@
+import wollok.game.*
+import Tony3.*
+import elementos.*
+import objetosParaImplementar.*
+import wollok.lang.*
+
+program TonyGame {
+	//  CONFIG	
+	game.title("Avengers Endgame")
+	game.height(10)
+	game.width(10)
+	game.ground("ground.png")
+
+	//  VISUALES
+ 	game.addVisualCharacter(tony)
+	//game.addVisual(new Pocion(position = randomizer.emptyPosition()))
+	//game.addVisual(new Pocion(position = randomizer.emptyPosition()))
+	//game.addVisual(new Pocion(position = randomizer.emptyPosition()))
+	
+	//game.schedule(5000,4.times({ i => (game.addVisual(new Pocion(position = randomizer.emptyPosition()) ) ) }) )
+	//4.times({ i => (game.addVisual(new Pocion(position = randomizer.emptyPosition()) ) ) })
+	game.onTick(5000, "agregaPociones", { => game.addVisual(new Pocion(position = randomizer.emptyPosition()) )  })
+	
+	//Teclado	
+	keyboard.a().onPressDo { tony.guardarPocion() }
+	keyboard.p().onPressDo { tony.aumentarPoder()  }
+	keyboard.b().onPressDo { tony.poder() }
+
+
+ 	//  COMIENZA
+	game.start()
+}
