@@ -25,6 +25,7 @@ program TonyGame {
 	keyboard.a().onPressDo { tony.guardarPocion() }
 	keyboard.p().onPressDo { tony.aumentarPoder()  }
 	keyboard.b().onPressDo { tony.poder() }
+	keyboard.z().onPressDo {game.removeTickEvent("agregaPociones")}
 
 
  	//  COMIENZA
