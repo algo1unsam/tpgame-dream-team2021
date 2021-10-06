@@ -10,7 +10,6 @@ object tony {
 	var poder = 0
 	
 	
-	
 	method aumentarPoder(){
 		poder += pociones.sum({ pocion => pocion.mana() })
 	}
