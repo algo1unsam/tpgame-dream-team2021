@@ -1,15 +1,16 @@
 import wollok.game.*
 import elementos.*
 import objetosParaImplementar.*
+import colecciones.*
 
 object tony {
+	var property codigo = 0
 	var property position = game.center()
-	const property image = "pepita2.png"
+	const property image = "zombi_fren.png"
 	var pociones = []
 	var armadura = []
 	var poder = 0
-	
-	
+ 
 	method aumentarPoder(){
 		poder += pociones.sum({ pocion => pocion.mana() })
 	}
