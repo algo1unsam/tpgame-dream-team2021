@@ -15,7 +15,7 @@ program TonyGame {
 
 	//  VISUALES
  	game.addVisualCharacter(tony)
- 	
+ 	game.addVisual(cueva)
 	//4.times({ i => (game.addVisual(new Pocion(position = randomizer.emptyPosition()) ) ) })
 	
 	game.onTick(6000, "agregaMonedas", { => game.addVisual(new Coin(position = randomizer.emptyPosition()) )  })

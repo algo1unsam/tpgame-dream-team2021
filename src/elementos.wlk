@@ -45,3 +45,9 @@ class Coin{
 		return numero
 	}
 }
+
+object cueva{
+	var property codigo = -1
+	var property image = "entrada_cueva.png"
+	const property position = game.at(5,9)
+}
