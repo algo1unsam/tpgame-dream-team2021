@@ -22,7 +22,7 @@ class Zombi{
 
 class Coin{
 	var property codigo = 1
-	const puntos = 10
+	const property points = 10
 	const property position = randomizer.emptyPosition()
 	const property coin = true
 	var numero = 0

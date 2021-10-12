@@ -10,6 +10,7 @@ object tony {
 	var pociones = []
 	var armadura = []
 	var poder = 0
+	var points = 0
  
 	method aumentarPoder(){
 		poder += pociones.sum({ pocion => pocion.mana() })
@@ -19,20 +20,28 @@ object tony {
 		game.say(tony,"He Aumentado mi poder a :" + poder)
 	}
 	
-	method guardarPocion(){
-		const pocionesDebajo = game.colliders(self)
+	method addPoints(addPoint){
+		points += addPoint	
+	}
+	
+	method points() = points
+	
+	method objetosDebajo(codigoTony){
+		var objetosDebajo = game.colliders(self)
+		return coleccionObjetos.filtrarObjetosPorCodigo(codigoTony,objetosDebajo) 
+	}
+	
+	method guardarMoneda(){
+		const monedasDebajo = self.objetosDebajo(1)
 		
 		//valido que existe alguna
-		if(pocionesDebajo.isEmpty()){
-			self.error("No hay pociones aquí")
-		}
-		else{
-			pocionesDebajo.forEach({
-									pocion => pociones.add(pocion)
-											  game.removeVisual(pocion)
+		
+		if(!monedasDebajo.isEmpty()){
+			monedasDebajo.forEach({
+									moneda => self.addPoints(moneda.points())
+											  game.removeVisual(moneda)
 			})
-			game.say(self,"Poción común")
-			
+						
 		}
 	}
 	

@@ -20,7 +20,7 @@ program TonyGame {
 	
 	game.onTick(6000, "agregaMonedas", { => game.addVisual(new Coin(position = randomizer.emptyPosition()) )  })
 	//prueba animacion con 1 objeto game.onTick(250,"actualiza imagen",{ => coin.numero() })
-	game.onTick(250,"actualiza imagen objetos", { => actualizarObjetos.actualizarImagen(1)})
+	game.onTick(200,"actualiza imagen objetos", { => actualizarObjetos.actualizar(1)})
 	
 
 
@@ -28,7 +28,7 @@ program TonyGame {
 
 	//Teclado	
 	
-	keyboard.a().onPressDo {}
+	keyboard.a().onPressDo {game.say(tony, "Puntaje Total: "+tony.points())}
 	
  	//  COMIENZA
 	game.start()

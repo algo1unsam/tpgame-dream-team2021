@@ -7,11 +7,10 @@ object coleccionObjetos{
 	
 	method objetosFiltrados(codigo){
 		//Devuelve los objetos filtrados por codigo
-		objetos = game.allVisuals()
-		objetos = objetos.filter({ objeto => objeto.codigo() == 1 })
-		return objetos
+		objetos = game.allVisuals()				
+		return self.filtrarObjetosPorCodigo(codigo,objetos)
 	}
 	
 	//Filtra los objetos por el codigo solicitado
-	//method filtrarObjetosPorCodigo(codigo) = objetos.filter({ objeto => objeto.codigo(codigo) == 1 })
+	method filtrarObjetosPorCodigo(codigo,objetosParametro) = objetosParametro.filter({ objeto => objeto.codigo() == codigo })
 }
