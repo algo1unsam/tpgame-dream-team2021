@@ -22,6 +22,8 @@ program TonyGame {
 	//prueba animacion con 1 objeto game.onTick(250,"actualiza imagen",{ => coin.numero() })
 	game.onTick(200,"actualiza imagen objetos", { => actualizarObjetos.actualizar(1)})
 	
+	game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
+	
 
 
 	//game.onTick(5000, "agregaPociones", { => game.addVisual(new Coin(position = randomizer.emptyPosition()) )  })

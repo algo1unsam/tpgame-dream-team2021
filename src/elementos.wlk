@@ -18,6 +18,7 @@ class Zombi{
 	var property codigo = 2
 	var vida = 100
 	const property position = randomizer.emptyPosition()
+	method image() = "zombi_fren.png"
 }
 
 class Coin{
