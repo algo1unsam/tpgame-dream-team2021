@@ -26,23 +26,20 @@ object tony {
 	
 	method points() = points
 	
-	method objetosDebajo(codigoTony){
-		var objetosDebajo = game.colliders(self)
-		return coleccionObjetos.filtrarObjetosPorCodigo(codigoTony,objetosDebajo) 
-	}
+	//method objetosDebajo(codigoTony){
+	//	var objetosDebajo = game.colliders(self)
+	//	return coleccionObjetos.filtrarObjetosPorCodigo(codigoTony,objetosDebajo) 
+	//}
 	
-	method guardarMoneda(){
-		const monedasDebajo = self.objetosDebajo(1)
-		
-		//valido que existe alguna
-		
-		if(!monedasDebajo.isEmpty()){
-			monedasDebajo.forEach({
-									moneda => self.addPoints(moneda.points())
-											  game.removeVisual(moneda)
-			})
-						
-		}
-	}
+	//method guardarMoneda(){
+	//	const monedasDebajo = self.objetosDebajo(1)
+	//	
+	//	if(!monedasDebajo.isEmpty()){
+	//		monedasDebajo.forEach({ moneda => self.addPoints(moneda.points())
+	//								game.removeVisual(moneda) })
+	//		}			
+	//	}
+	
+	//method entrarCueva()
 	
 }
