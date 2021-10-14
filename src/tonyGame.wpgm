@@ -8,24 +8,10 @@ import wollok.lang.*
 program TonyGame {
 	//  CONFIG	
 	game.title("Avengers Endgame")
-	game.height(10)
-	game.width(10)
-	game.ground("ground.png")
 
-	//  VISUALES
- 	game.addVisualCharacter(tony)
- 	game.addVisual(cueva)
-	//4.times({ i => (game.addVisual(new Pocion(position = randomizer.emptyPosition()) ) ) })
-	
-	//Juego Corriendo cosas
-	game.onTick(6000, "agregaMonedas", { => monedero.generarMoneda(5)  })
-	game.onTick(200,"actualiza imagen objetos", { => monedero.girarMonedas()})
-	game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
-	
+	//Programar evento
+	escenario.escenarioUno()
 
-	//Teclado	
-	keyboard.a().onPressDo {game.say(tony, "Puntaje Total: " + tony.points())}
-	
  	//COMIENZA
 	game.start()
 }
