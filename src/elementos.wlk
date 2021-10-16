@@ -1,6 +1,7 @@
 import wollok.game.*
 import objetosParaImplementar.*
 import tony.*
+import direcciones.*
 
 class Objetos{
 	
@@ -20,12 +21,29 @@ class PocionVeneno inherits Pocion{
 
 	
 }
-
+//modifique Zombi y configure sus movimientos, la idea es mejorarlo para que cada vez se acerque a Tony!
+//Cuando un Zombi choca a Tony le quita salud, pensaba en que si toni se encuentra la posicion cercana al zombi y lo ataque, el zombi muera.
 class Zombi inherits Objetos{
 
 	var vida = 100
-	const property position = randomizer.emptyPosition()
+	var property position = randomizer.emptyPosition()
 	method image() = "zombi_fren.png"
+	
+	override method chocasteCon(personaje){
+		tony.restarSalud(2)
+	}
+		
+	method moverZombi(number){
+		if (number == 1){
+			arriba.mover(self)
+		}else if (number == 2){
+			abajo.mover(self)
+		}else if (number == 3){
+			derecha.mover(self)
+		}else if (number == 4){
+			izquierda.mover(self)
+		}
+	}	
 }
 
 class Coin inherits Objetos{
@@ -61,7 +79,7 @@ class Coin inherits Objetos{
 object cueva inherits Objetos{
 
 	var property image = "entrada_cueva.png"
-	const property position = game.at(8,9)
+	var property position = game.at(8,9)
 	
 	override method chocasteCon(personaje){
 		if(personaje.points() > 50){
@@ -94,6 +112,46 @@ object monedero{
 	}
 }
 
+//genera una coleccion de Zombis
+//Hasta ahora los zombis se mueven cuando se agrega uno nuevo, tengo que mejorar para que se muevan todo el tiempo.
+object ataqueZombi{
+	var zombis = []
+	
+	method generarZombis(maxZombis){
+		if (zombis.size() <= maxZombis){
+			const nuevoZombi = new Zombi(position = randomizer.emptyPosition())
+			game.addVisual(nuevoZombi)
+			zombis.add(nuevoZombi)
+			self.moverALosZombis()
+		}
+	}
+	
+	method moverALosZombis(){
+		zombis.forEach({z => z.moverZombi(self.devuelveNum())})
+		//game.onTick(2000, "mueveZombi", { self.movimiento(1.randomUpTo(4))})
+	}
+	
+	method devuelveNum() = 0.randomUpTo(4).roundUp()
+	
+	//method movimiento(number){
+	//	if (number == 1){
+	//		zombis.forEach({z => arriba.mover(z)})
+	//	}else if (number == 2){
+	//		zombis.forEach({z => abajo.mover(z)})
+	//	}else if (number == 3){
+	//		zombis.forEach({z => derecha.mover(z)})
+	//	}else if (number == 4){
+	//		zombis.forEach({z => izquierda.mover(z)})
+	//	}
+	//}
+		
+}
+
+//Mi idea es que aca aparezcan tres zombis a la vez..
+object hordaDeZombi{
+	
+}
+
 object escenario{
 	
 	method configuracionEscenario(){
@@ -107,6 +165,7 @@ object escenario{
 		
 		//Juego Corriendo cosas
 		game.onTick(6000, "agregaMonedas", { => monedero.generarMoneda(5)  })
+		game.onTick(8000, "agregaZombis", { => ataqueZombi.generarZombis(3)  })
 		game.onTick(200,"actualiza imagen objetos", { => monedero.girarMonedas()})
 		game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
 		keyboard.a().onPressDo {game.say(tony, "Puntaje Total: " + tony.points())}
