@@ -138,10 +138,13 @@ class Coin inherits Objetos{
 	}
 }
 
+
+//Cuando se interactua con la cueva y se cumple la condicion, se modificar el escenario
+//todavía no logré hacer que cambie el fondo con el game.ground("imagen")
 object cueva inherits Objetos{
 
-	var property image = "entrada_cueva.png"
-	var property position = game.at(8,9)
+	var property image = "entrada_cueva_mejorada.png"
+	var property position = game.at(8,8)
 	
 	override method chocasteCon(personaje){
 		if(personaje.points() > 50){
@@ -155,6 +158,9 @@ object cueva inherits Objetos{
 	
 }
 
+
+//Se generan monedas y colección de monedas y se les modifica la 
+//imagen para dar sensación de movimiento
 object monedero{
 	var monedas = []
 	
@@ -177,7 +183,7 @@ object monedero{
 //genera una coleccion de Zombis
 //Hasta ahora los zombis se mueven cuando se agrega uno nuevo, tengo que mejorar para que se muevan todo el tiempo.
 object ataqueZombi{
-	var zombis = []	
+	var property zombis = []	
 	
 	method generarZombis(maxZombis){
 		if (zombis.size() <= maxZombis){
@@ -218,9 +224,21 @@ object ataqueZombi{
 		
 }
 
-//Mi idea es que aca aparezcan tres zombis a la vez..
+//Horda zombi formada por 3 zombis
+//idea de aumentar cantidad de iteraciones de zombis cada vez que pasa tiempo
 object hordaDeZombi{
+	//var contador = 0
 	
+	method generarHordaZombi(n) = n.times({ i => ataqueZombi.generarZombis(ataqueZombi.zombis().size() + n - i) })  //n.times({ i => self.incrementandoZombisyDificultad() })
+
+	//method incrementandoZombisyDificultad(n,i){
+	//	ataqueZombi.generarZombis(ataqueZombi.zombis().size() + n - i)
+	//	game.onTick(18000, "Incrementador de zombis", { => contador = n + 1})
+	//}
+	
+	//method contador(){
+	//	return contador
+	//}
 }
 
 object escenario{
@@ -235,6 +253,7 @@ object escenario{
 		
 		
 		//Juego Corriendo cosas
+		game.onTick(18000, "hordaZombis", { => hordaDeZombi.generarHordaZombi(3)})
 		game.onTick(6000, "agregaMonedas", { => monedero.generarMoneda(5)  })
 		game.onTick(8000, "agregaZombis", { => ataqueZombi.generarZombis(3)  })
 		game.onTick(1000, "moverZombis", { => ataqueZombi.moverALosZombis()  })		
