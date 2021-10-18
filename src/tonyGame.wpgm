@@ -1,9 +1,6 @@
 import wollok.game.*
-import tony.*
-import elementos.*
-import objetosParaImplementar.*
 import wollok.lang.*
-
+import escenario.*
 
 program TonyGame {
 	//  CONFIG	
@@ -13,5 +10,5 @@ program TonyGame {
 	escenario.escenarioUno()
 
  	//COMIENZA
-	game.start()
+ 	game.start()
 }

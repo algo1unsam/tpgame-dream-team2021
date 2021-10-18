@@ -2,35 +2,61 @@ import wollok.game.*
 import objetosParaImplementar.*
 import tony.*
 import direcciones.*
+import escenario.*
 
 class Objetos{
+	//agregando polimorfismo a todas las clases
+	//----------------------------------------
 	
+	//para que no joda con que hay que inicializar clases con valor de vida
+	var property vida = 0
+	
+	
+	//para que no haya problema al interactuar con tony
 	method chocasteCon(personaje){
 		
+	}
+	
+	
+	//para que no haya problema con los zombis
+	method recibirDanio(danio){
 	}
 }
 
 class Pocion inherits Objetos{
-
 	var property mana = 100
 	const property position = game.at(1,1)
 	method image() = "pocion2no-bg.png"
 }
 
-class PocionVeneno inherits Pocion{
 
-	
+class PocionVeneno inherits Pocion{
 }
+
+
 //Los zombis ya se acercan a Tony (ver que se aprecien cada zombi cuando ataca a Tony)
 //Cuando un Zombi choca a Tony le quita salud, pensaba en que si toni se encuentra la posicion cercana al zombi y lo ataque, el zombi muera.
 class Zombi inherits Objetos{
 
-	var vida = 100
+	var property vida = 100
 	var property position = randomizer.emptyPosition()
 	var property perfil = "fren"	
 	var property coordenadas = [] //[x, y]
 	
 	method image() = "zombi_"+self.perfil()+".png"
+	
+	override method recibirDanio(danio){
+		vida -= danio
+		self.zombiVivo()
+	} 
+	
+	method zombiVivo(){
+		if(self.vida() <= 0){
+			ataqueZombi.removerZombi(self)
+			game.removeVisual(self)
+			monedero.generarMoneda(5,self.position())
+		}
+	}
 	
 	override method chocasteCon(personaje){
 		tony.restarSalud(2)
@@ -111,7 +137,7 @@ class Zombi inherits Objetos{
 class Coin inherits Objetos{
 
 	const property points = 10
-	const property position = randomizer.emptyPosition()
+	var property position = randomizer.emptyPosition()
 	const property coin = true
 	var numero = 0
 	
@@ -164,9 +190,10 @@ object cueva inherits Objetos{
 object monedero{
 	var monedas = []
 	
-	method generarMoneda(maxMonedas){
+	method generarMoneda(maxMonedas,position){
 		if (monedas.size() <= maxMonedas){
-		const monedaNueva = new Coin(position = randomizer.emptyPosition())
+		const monedaNueva = new Coin(position = position)
+		movimientos.movimientoObjeto(monedaNueva)
 		game.addVisual(monedaNueva)
 		monedas.add(monedaNueva)
 		}
@@ -207,83 +234,15 @@ object ataqueZombi{
 		}
 	}
 	
-	//metodo que me devuelve un nro random
+	//metodo que me devuelve un nro random -- Desplazado a direcciones
 	method devuelveNum() = 0.randomUpTo(4).roundUp()
 	
-	//method movimiento(number){
-	//	if (number == 1){
-	//		zombis.forEach({z => arriba.mover(z)})
-	//	}else if (number == 2){
-	//		zombis.forEach({z => abajo.mover(z)})
-	//	}else if (number == 3){
-	//		zombis.forEach({z => derecha.mover(z)})
-	//	}else if (number == 4){
-	//		zombis.forEach({z => izquierda.mover(z)})
-	//	}
-	//}
-		
-}
-
-//Horda zombi formada por 3 zombis
-//idea de aumentar cantidad de iteraciones de zombis cada vez que pasa tiempo
-object hordaDeZombi{
-	//var contador = 0
+	//Horda zombi formada por 3 zombis
+	//idea de aumentar cantidad de iteraciones de zombis cada vez que pasa tiempo
+	method generarHordaZombi(n) = n.times({ i => self.generarZombis(self.zombis().size() + n - i) })  //n.times({ i => self.incrementandoZombisyDificultad() })
 	
-	method generarHordaZombi(n) = n.times({ i => ataqueZombi.generarZombis(ataqueZombi.zombis().size() + n - i) })  //n.times({ i => self.incrementandoZombisyDificultad() })
-
-	//method incrementandoZombisyDificultad(n,i){
-	//	ataqueZombi.generarZombis(ataqueZombi.zombis().size() + n - i)
-	//	game.onTick(18000, "Incrementador de zombis", { => contador = n + 1})
-	//}
 	
-	//method contador(){
-	//	return contador
-	//}
-}
-
-object escenario{
-	
-	method configuracionEscenario(){
-		//Configuracion del escenario, colliders, visuales, y teclas
+	//se remueve el zombi de la colección
+	method removerZombi(zombi) = zombis.remove(zombi)
 		
-		//visual algunos
-		game.addVisualCharacter(tony)		
-		game.height(10)
-		game.width(10)
-		
-		
-		//Juego Corriendo cosas
-		game.onTick(18000, "hordaZombis", { => hordaDeZombi.generarHordaZombi(3)})
-		game.onTick(6000, "agregaMonedas", { => monedero.generarMoneda(5)  })
-		game.onTick(8000, "agregaZombis", { => ataqueZombi.generarZombis(3)  })
-		game.onTick(1000, "moverZombis", { => ataqueZombi.moverALosZombis()  })		
-		game.onTick(200,"actualiza imagen objetos", { => monedero.girarMonedas()})
-		game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
-		keyboard.a().onPressDo {game.say(tony, "Puntaje Total: " + tony.points())}
-		//keyboard.s().onPressDo {game.say(tony, "position: " + tony.position().x())} //para probar el metodo .position()
-		
-		//Teclado	
-		keyboard.a().onPressDo {game.say(tony, "Puntaje Total: " + tony.points())}
-	}
-	
-	method escenarioUno(){
-		//configuracion del escenario 1
-		game.ground("pasto50x50.jpg")
-	 	game.addVisual(cueva)
-		//4.times({ i => (game.addVisual(new Pocion(position = randomizer.emptyPosition()) ) ) })
-		self.configuracionEscenario()
-	}
-	
-	method escenarioDos(){
-		//configuracion del escenario 2
-		
-		//no se logra modificar el fondo al cambiar de escenario
-		game.ground("piedra50x50.png")
-		self.configuracionEscenario()
-	}
-	
-	method removerVisualEscenario(){
-		//remover todos los visuales del escenario
-		game.clear()
-	}
 }

@@ -18,6 +18,11 @@ object tony {
 	method puntoY () = self.position().y()
  
  
+ 	method atacar(danio){
+ 		const objetosDebajo = game.colliders(self)
+ 		objetosDebajo.forEach({ objeto =>  objeto.recibirDanio(danio) })
+ 	}
+ 
 	method aumentarPoder(){
 		poder += pociones.sum({ pocion => pocion.mana() })
 	}
