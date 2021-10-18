@@ -12,6 +12,11 @@ object tony {
 	var armadura = []
 	var poder = 0
 	var points = 0
+	 
+ 	method puntoX () = self.position().x()
+	
+	method puntoY () = self.position().y()
+ 
  
 	method aumentarPoder(){
 		poder += pociones.sum({ pocion => pocion.mana() })
