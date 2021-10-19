@@ -1,6 +1,7 @@
 import elementos.*
 import tony.*
 import wollok.game.*
+import objetosParaImplementar.*
 
 
 object escenario{
@@ -15,7 +16,12 @@ object escenario{
 		
 		
 		//Juego Corriendo cosas
+		game.addVisual(barraDeVida)
 		game.onTick(15000, "hordaZombis", { => ataqueZombi.generarHordaZombi(3)})
+		
+		//Pociones
+		pociones.pocionesCurativas(randomizer.emptyPosition())
+		pociones.pocionesCurativas(randomizer.emptyPosition())
 		
 		//quedo deprecado dado que ahora los zombis dan monedas
 		//game.onTick(6000, "agregaMonedas", { => monedero.generarMoneda(5)  })

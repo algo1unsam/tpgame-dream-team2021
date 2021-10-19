@@ -25,12 +25,26 @@ class Objetos{
 
 class Pocion inherits Objetos{
 	var property mana = 100
-	const property position = game.at(1,1)
-	method image() = "pocion2no-bg.png"
+	const property position = randomizer.emptyPosition()           //= game.at(1,1)
+	method image() = "pocion1.png"
+	
+	override method chocasteCon(personaje){
+		personaje.recuperaSalud(4)
+		pociones.removerPocion(self)
+	}
 }
 
 
-class PocionVeneno inherits Pocion{
+class PocionVeneno inherits Objetos{
+	
+	const property position = randomizer.emptyPosition()
+	
+	method image() = "pocion2.png"
+	override method chocasteCon(personaje){
+		personaje.restarSalud(4)
+		pociones.removerPocion(self)
+	}
+	
 }
 
 
@@ -245,4 +259,53 @@ object ataqueZombi{
 	//se remueve el zombi de la colección
 	method removerZombi(zombi) = zombis.remove(zombi)
 		
+}
+
+object pociones {
+	var property pociones = []
+	
+	method pocionesCurativas(posicion){
+		const nuevaPocion = new Pocion(position = posicion)
+		game.addVisual(nuevaPocion)
+		pociones.add(nuevaPocion)
+	}
+	
+	method pocionesVeneno(posicion){
+		const nuevaPocion = new PocionVeneno(position = posicion)
+		game.addVisual(nuevaPocion)
+		pociones.add(nuevaPocion)
+	}
+	
+	method removerPocion(pocion){
+		pociones.remove(pocion)
+		game.removeVisual(pocion)
+	}
+} 
+
+object barraDeVida {
+	const property position = game.at(6,0)
+	var saludTony = 13
+	method image() = "barra-"+saludTony+".png"
+	
+	method restarBarra(salud) {
+		if(saludTony - salud > 0){
+			saludTony -= salud
+		}else{
+			saludTony = 0
+		}
+	}
+	
+	method sumarBarra(salud) {
+		if(saludTony + salud < 13){
+			saludTony += salud
+		}else {
+			saludTony = 13
+		}
+	}
+	
+	method barraLlena(){
+		saludTony = 13
+	}
+	
+	
 }

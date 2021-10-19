@@ -6,7 +6,7 @@ object tony {
 	var property codigo = 0
 	var property position = game.center()
 	const property image = "zombi_fren.png"
-	var salud = 100
+	var salud = 13
 	var vidas = 3
 	var pociones = []
 	var armadura = []
@@ -28,22 +28,40 @@ object tony {
 	}
 	
 	method restarSalud(menosSalud){
-		salud -= menosSalud
-		game.say(tony,"Me ataco un Zombi, mi salud es :" + salud)
+		if (salud - menosSalud > 0){
+			salud -= menosSalud
+		//game.say(tony,"Me ataco un Zombi, mi salud es :" + salud)
+		barraDeVida.restarBarra(menosSalud)
 		self.estadoSalud()
+		} else {
+			salud = 0
+			barraDeVida.restarBarra(menosSalud)
+		}
+	}
+	
+	method recuperaSalud(masSalud){
+		if (salud + masSalud <= 13){
+			salud += masSalud
+			barraDeVida.sumarBarra(masSalud)
+		}else {
+			salud = 13
+			barraDeVida.sumarBarra(masSalud)
+		}
 	}
 	
 	method estadoSalud(){
 		if (salud <= 0){
 			self.restaVida()
 			if (self.sigueConVida()){
-				salud = 100
+				salud = 13
 			}
 			else{
 				game.say(tony,"Me he quedado sin vidas")
 			}
 		}
 	}
+	
+	method salud() = salud
 	
 	method restaVida(){
 		vidas -= 1
