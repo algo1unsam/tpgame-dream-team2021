@@ -1,6 +1,7 @@
 import wollok.game.*
 import elementos.*
 import objetosParaImplementar.*
+import enemigos.*
 
 object tony {
 	var property codigo = 0
@@ -56,7 +57,7 @@ object tony {
 				salud = 13
 			}
 			else{
-				game.say(tony,"Me he quedado sin vidas")
+				game.say(self,"Me he quedado sin vidas")
 			}
 		}
 	}
@@ -70,7 +71,7 @@ object tony {
 	method sigueConVida() = vidas > 0
 	
 	method poder(){
-		game.say(tony,"He Aumentado mi poder a :" + poder)
+		game.say(self,"He Aumentado mi poder a :" + poder)
 	}
 	
 	method addPoints(addPoint){

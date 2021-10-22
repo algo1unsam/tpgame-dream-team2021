@@ -2,6 +2,7 @@ import elementos.*
 import tony.*
 import wollok.game.*
 import objetosParaImplementar.*
+import enemigos.*
 
 
 object escenario{
@@ -22,6 +23,7 @@ object escenario{
 		//Pociones
 		pociones.pocionesCurativas(randomizer.emptyPosition())
 		pociones.pocionesCurativas(randomizer.emptyPosition())
+		pociones.pocionesVeneno(randomizer.emptyPosition())
 		
 		//quedo deprecado dado que ahora los zombis dan monedas
 		//game.onTick(6000, "agregaMonedas", { => monedero.generarMoneda(5)  })
