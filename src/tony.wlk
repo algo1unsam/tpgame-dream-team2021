@@ -2,12 +2,14 @@ import wollok.game.*
 import elementos.*
 import objetosParaImplementar.*
 import enemigos.*
+import direcciones.*
 
 object tony {
 	var property codigo = 0
 	var property position = game.center()
-	const property image = "zombi_fren.png"
-	var salud = 13
+	var property perfil = "tony_fren.png"
+	var property image = self.perfil()
+	var property salud = 13
 	var vidas = 3
 	var pociones = []
 	var armadura = []
@@ -18,6 +20,27 @@ object tony {
 	
 	method puntoY () = self.position().y()
  
+ 	method coordenadas() = [self.position().x(), self.position().y()]
+ 
+ 	method moverArriba(){
+ 		movimientos.moverUp(self) 
+ 		self.perfil("tony_fren.png")				 
+ 	}
+ 	
+ 	method moverAbajo(){
+ 		movimientos.moverDown(self)
+ 		self.perfil("tony_es.png")
+ 	}
+ 	
+ 	method moverDerecha(){
+ 		movimientos.moverRight(self)
+ 		self.perfil("tony_der.png")
+ 	} 
+ 	
+ 	method moverIzquierda(){
+ 		movimientos.moverLeft(self)
+ 		self.perfil("tony_izq.png")
+ 	}
  
  	method atacar(danio){
  		const objetosDebajo = game.colliders(self)
@@ -32,21 +55,17 @@ object tony {
 		if (salud - menosSalud > 0){
 			salud -= menosSalud
 		//game.say(tony,"Me ataco un Zombi, mi salud es :" + salud)
-		barraDeVida.restarBarra(menosSalud)
 		self.estadoSalud()
 		} else {
 			salud = 0
-			barraDeVida.restarBarra(menosSalud)
 		}
 	}
 	
 	method recuperaSalud(masSalud){
 		if (salud + masSalud <= 13){
 			salud += masSalud
-			barraDeVida.sumarBarra(masSalud)
 		}else {
 			salud = 13
-			barraDeVida.sumarBarra(masSalud)
 		}
 	}
 	
@@ -62,7 +81,6 @@ object tony {
 		}
 	}
 	
-	method salud() = salud
 	
 	method restaVida(){
 		vidas -= 1

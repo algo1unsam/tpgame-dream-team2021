@@ -31,12 +31,16 @@ object escenario{
 		game.onTick(1000, "moverZombis", { => ataqueZombi.moverALosZombis()  })		
 		game.onTick(200,"actualiza imagen objetos", { => monedero.girarMonedas()})
 		game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
-		keyboard.a().onPressDo {game.say(tony, "Puntaje Total: " + tony.points())}
+
 		//keyboard.s().onPressDo {game.say(tony, "position: " + tony.position().x())} //para probar el metodo .position()
 		
 		//Teclado
 		keyboard.x().onPressDo { tony.atacar(101) }	
-		keyboard.a().onPressDo {game.say(tony, "Puntaje Total: " + tony.points())}
+		keyboard.p().onPressDo {game.say(tony, "Puntaje Total: " + tony.points())}
+		keyboard.w().onPressDo {tony.moverArriba()}
+		keyboard.s().onPressDo {tony.moverAbajo()}
+		keyboard.d().onPressDo {tony.moverDerecha()}
+		keyboard.a().onPressDo {tony.moverIzquierda()}
 	}
 	
 	method escenarioUno(){

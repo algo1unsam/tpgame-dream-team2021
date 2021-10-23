@@ -4,13 +4,12 @@ import objetosParaImplementar.*
 import tony.*
 import direcciones.*
 
-class Personajes inherits Objetos {
+class Personajes inherits Elementos {
 	var property vida
 	
+	var property position = randomizer.emptyPosition()
 		//para que no haya problema con los zombis
-	method recibirDanio(danio){
-	
-	}
+	method recibirDanio(danio)
 	
 }
 
@@ -21,11 +20,10 @@ class Zombi inherits Personajes{
 
 	var property perfil = "fren"	
 	var property coordenadas = [] //[x, y]
-	
-	override method image() = "zombi_"+self.perfil()+".png"
+	override method image() = "zombi_"+ self.perfil() +".png"
 	
 	override method recibirDanio(danio){
-		vida -= danio
+		vida -= danio 
 		self.zombiVivo()
 	} 
 	
@@ -37,78 +35,18 @@ class Zombi inherits Personajes{
 		}
 	}
 	
-	override method chocasteCon(personaje){
-		tony.restarSalud(2)
-	}
-		
-	method movimiento(){
-		coordenadas.clear()
-		var aux = []
-		aux.addAll([self.position().x(), self.position().y()])
-		self.coordenadas(aux)
-	}
+	override method chocasteCon(personaje) = game.schedule(1000,{ => self.restarSalud(personaje)})
+
+	method restarSalud(personaje) = 
+		if(self.siMismaPosicion(personaje)) personaje.restarSalud(2)
+		else                                personaje.restarSalud(0)
+
+	method siMismaPosicion(personaje) = self.position() == personaje.position()
 	
-	//mi duda es si hara falta una variable de coordenadas o solo con position().x() y position().Y() funcionaria? probar..
-	method puntoX () = self.coordenadas().get(0)
 	
-	method puntoY () = self.coordenadas().get(1)
-	
-	//metodo para mover a los zombis con un numero aleatorio.
-	method moverZombi(number){
-		if (number == 1 and self.puntoY() < 9){
-		  //if (number == 1){
-			arriba.mover(self)
-			self.perfil("espal")
-			self.movimiento()
-		}else if (number == 2 and self.puntoY() > 0){
-		   //else if (number == 2){
-			abajo.mover(self)
-			self.perfil("fren")
-			self.movimiento()
-		}else if (number == 3 and self.puntoX() < 9){
-		   //else if (number == 3){
-			derecha.mover(self)
-			100.times({i => self.perfil("der_0")}) 
-			self.perfil("der_1")
-			self.movimiento()
-		}else if (number == 4 and self.puntoX() > 0){
-		   //else if (number == 4){
-			izquierda.mover(self)
-			100.times({i => self.perfil("izq_0")})
-			self.perfil("izq_1")
-			self.movimiento()
-			
-		}
-	}
-	
-	//Metodos para mover al Zombi hasta Tony
-	//fijarse en el objeto AtaqueZombi!! mas abajo
-	method moverYorX () = (self.puntoY() - tony.puntoY()).abs() > (self.puntoX() - tony.puntoX()).abs()	
-		
 	method sigueATony(){
-		if(self.moverYorX()){
-			if(self.puntoY() - tony.puntoY() >= 0){
-				abajo.mover(self)
-				self.perfil("fren")
-				self.movimiento()
-			}else{
-				arriba.mover(self)
-				self.perfil("espal")
-				self.movimiento()
-			}
-		}else{
-			if(self.puntoX() - tony.puntoX() >= 0){
-				izquierda.mover(self)
-				100.times({i => self.perfil("izq_0")})
-				self.perfil("izq_1")
-				self.movimiento()
-			}else{
-				derecha.mover(self)
-				100.times({i => self.perfil("der_0")}) 
-				self.perfil("der_1")
-				self.movimiento()
-			}
-		}
+		if(movimientos.moverYorX(self)){ movimientos.moverY(self)	}
+		else                           { movimientos.moverX(self) }
 	}	
 		
 }

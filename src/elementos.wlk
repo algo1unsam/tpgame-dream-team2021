@@ -5,17 +5,18 @@ import direcciones.*
 import escenario.*
 import enemigos.*
 
-class Objetos{
+class Elementos{
 	//agregando polimorfismo a todas las clases
 	//----------------------------------------
-	var property position = randomizer.emptyPosition()  
 	
 	method image()
 	//para que no haya problema al interactuar con tony
-	method chocasteCon(personaje){
-		
-	}
-	
+	method chocasteCon(personaje)
+}
+
+//Algunos objetos generaban conflicto al heredar el position, los objetos solo tiene como padre a "Elementos"
+class Objetos inherits Elementos{
+	var property position = randomizer.emptyPosition() 
 }
 
 class Pocion inherits Objetos{	
@@ -70,10 +71,10 @@ class Coin inherits Objetos{
 
 //Cuando se interactua con la cueva y se cumple la condicion, se modificar el escenario
 //todavía no logré hacer que cambie el fondo con el game.ground("imagen")
-object cueva inherits Objetos{
+object cueva inherits Elementos{
+	var property position = game.at(8,8)	
 
 	override method image() = "entrada_cueva_mejorada.png"
-	override method position () = game.at(8,8)
 	
 	override method chocasteCon(personaje){
 		if(personaje.points() > 50){
@@ -91,13 +92,21 @@ object cueva inherits Objetos{
 object monedero{
 	var monedas = []
 	
-	method generarMoneda(maxMonedas,position){
-		if (monedas.size() <= maxMonedas){
-		const monedaNueva = new Coin(position = position)
-		movimientos.movimientoObjeto(monedaNueva)
-		game.addVisual(monedaNueva)
-		monedas.add(monedaNueva)
-		}
+	method generarMoneda(maxMonedas,position){ self.limiteMonedas(maxMonedas,position) }
+	
+	method limiteMonedas(maxMonedas,position){ 
+		if (monedas.size() <= maxMonedas) 
+		{  const monedaNueva = new Coin(position = position)
+           self.agregarYGirarMoneda(monedaNueva)} }
+	
+	method agregarYGirarMoneda(moneda){
+		movimientos.movimientoObjeto(moneda)
+		self.agregarMoneda(moneda)
+	}
+	
+	method agregarMoneda(moneda){
+		game.addVisual(moneda)
+		monedas.add(moneda)
 	}
 	
 	method girarMonedas() = monedas.forEach({ objeto => objeto.numeroImagen() })
@@ -131,30 +140,20 @@ object pociones {
 	}
 } 
 
-object barraDeVida {
-	const property position = game.at(6,0)
-	var saludTony = 13
-	method image() = "barra-"+saludTony+".png"
+object barraDeVida inherits Elementos {
+	var property position = game.at(6,0)
+	//var saludTony = 13
 	
-	method restarBarra(salud) {
-		if(saludTony - salud > 0){
-			saludTony -= salud
-		}else{
-			saludTony = 0
-		}
-	}
 	
-	method sumarBarra(salud) {
-		if(saludTony + salud < 13){
-			saludTony += salud
-		}else {
-			saludTony = 13
-		}
-	}
+	//la barra se actualiza en función de la vida que tiene el objeto tony
+	override method image() = "barra-" + self.saludTony() + ".png"
 	
-	method barraLlena(){
-		saludTony = 13
-	}
+	//se va a buscar la vida de tony para ver cuanto tiene
+	method saludTony() = tony.salud()
+	
+	//no nos deja tener el método solamente en la clase abstracta
+	override method chocasteCon(personaje){}
+	
 	
 	
 }
