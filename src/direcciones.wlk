@@ -114,6 +114,8 @@ object movimientos{
 	
 	method devuelveNum() = 0.randomUpTo(4).roundUp()	
 		
+	method positivoNegativo() = if(self.devuelveNum() >= 3) self.devuelveNum() * -1 else self.devuelveNum()
+		
 	method movimientoColeccion(coleccion){
 		const number = self.devuelveNum()
 		if (number == 1){

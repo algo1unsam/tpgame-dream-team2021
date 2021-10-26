@@ -7,7 +7,7 @@ import direcciones.*
 object tony {
 	var property codigo = 0
 	var property position = game.center()
-	var property perfil = "tony_fren.png"
+	var property perfil = "fren"
 	var property image = self.perfil()
 	var property salud = 13
 	var vidas = 3
@@ -15,6 +15,8 @@ object tony {
 	var armadura = []
 	var poder = 0
 	var points = 0
+	 
+	method image() = "tony_" + self.perfil() +".png"
 	 
  	method puntoX () = self.position().x()
 	
@@ -24,22 +26,22 @@ object tony {
  
  	method moverArriba(){
  		movimientos.moverUp(self) 
- 		self.perfil("tony_fren.png")				 
+ 		self.perfil("es")				 
  	}
  	
  	method moverAbajo(){
  		movimientos.moverDown(self)
- 		self.perfil("tony_es.png")
+ 		self.perfil("fren")
  	}
  	
  	method moverDerecha(){
  		movimientos.moverRight(self)
- 		self.perfil("tony_der.png")
+ 		self.perfil("der")
  	} 
  	
  	method moverIzquierda(){
  		movimientos.moverLeft(self)
- 		self.perfil("tony_izq.png")
+ 		self.perfil("izq")
  	}
  
  	method atacar(danio){

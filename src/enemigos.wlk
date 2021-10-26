@@ -27,11 +27,15 @@ class Zombi inherits Personajes{
 		self.zombiVivo()
 	} 
 	
+	method queDropea(){
+		 if(movimientos.devuelveNum() == 4){ monedero.generarMoneda(5,self.position())}
+		 else if (movimientos.devuelveNum() == 3){  pociones.generarPocion(self.position())}
+}	
 	method zombiVivo(){
 		if(self.vida() <= 0){
 			ataqueZombi.removerZombi(self)
 			game.removeVisual(self)
-			monedero.generarMoneda(5,self.position())
+			self.queDropea()
 		}
 	}
 	

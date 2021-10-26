@@ -12,18 +12,19 @@ object escenario{
 		
 		//visual algunos
 		game.addVisualCharacter(tony)		
-		game.height(10)
+		game.height(11)
 		game.width(10)
 		
+		game.addVisual(tablon)
 		
 		//Juego Corriendo cosas
 		game.addVisual(barraDeVida)
 		game.onTick(15000, "hordaZombis", { => ataqueZombi.generarHordaZombi(3)})
 		
 		//Pociones
-		pociones.pocionesCurativas(randomizer.emptyPosition())
-		pociones.pocionesCurativas(randomizer.emptyPosition())
-		pociones.pocionesVeneno(randomizer.emptyPosition())
+		//pociones.pocionesCurativas(randomizer.emptyPosition())
+		//pociones.pocionesCurativas(randomizer.emptyPosition())
+		//pociones.pocionesVeneno(randomizer.emptyPosition())
 		
 		//quedo deprecado dado que ahora los zombis dan monedas
 		//game.onTick(6000, "agregaMonedas", { => monedero.generarMoneda(5)  })

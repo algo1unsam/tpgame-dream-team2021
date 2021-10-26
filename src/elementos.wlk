@@ -20,29 +20,22 @@ class Objetos inherits Elementos{
 }
 
 class Pocion inherits Objetos{	
-	//const property position = randomizer.emptyPosition()           //= game.at(1,1)
-	override method image() = "pocion1.png"
+	const property salud
+	
+	override method image() = "pocion" + self.actualizarImagen() + ".png"
 	
 	override method chocasteCon(personaje){
-		personaje.recuperaSalud(4)
+		personaje.recuperaSalud(self.salud())
 		pociones.removerPocion(self)
 	}
+	
+	method actualizarImagen() = if(salud < 0) "2" else "1"
 }
 
-class PocionVeneno inherits Objetos{
-	
-	//const property position = randomizer.emptyPosition()
-	override method image() = "pocion2.png"
-	override method chocasteCon(personaje){
-		personaje.restarSalud(4)
-		pociones.removerPocion(self)
-	}	
-}
 
 class Coin inherits Objetos{
 
 	const property points = 10
-	//var property position = randomizer.emptyPosition()
 	const property coin = true
 	var numero = 0
 	
@@ -122,17 +115,14 @@ object monedero{
 object pociones {
 	var property pociones = []
 	
-	method pocionesCurativas(posicion){
-		const nuevaPocion = new Pocion(position = posicion)
+	method generarPocion(posicion){
+		const nuevaPocion = new Pocion(position = posicion, salud = movimientos.positivoNegativo() )
+		nuevaPocion.actualizarImagen()
 		game.addVisual(nuevaPocion)
+		movimientos.movimientoObjeto(nuevaPocion)
 		pociones.add(nuevaPocion)
 	}
 	
-	method pocionesVeneno(posicion){
-		const nuevaPocion = new PocionVeneno(position = posicion)
-		game.addVisual(nuevaPocion)
-		pociones.add(nuevaPocion)
-	}
 	
 	method removerPocion(pocion){
 		pociones.remove(pocion)
@@ -146,14 +136,16 @@ object barraDeVida inherits Elementos {
 	
 	
 	//la barra se actualiza en función de la vida que tiene el objeto tony
-	override method image() = "barra-" + self.saludTony() + ".png"
+	override method image() = "barra-" + tony.salud() + ".png"
 	
-	//se va a buscar la vida de tony para ver cuanto tiene
-	method saludTony() = tony.salud()
 	
 	//no nos deja tener el método solamente en la clase abstracta
 	override method chocasteCon(personaje){}
 	
+}
+
+object tablon{
+	var property position = game.at(0,0)
 	
-	
+	method image() = "fondo_tablones.png"
 }
