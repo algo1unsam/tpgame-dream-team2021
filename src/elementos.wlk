@@ -136,7 +136,7 @@ object barraDeVida inherits Elementos {
 	
 	
 	//la barra se actualiza en función de la vida que tiene el objeto tony
-	override method image() = "barra-" + tony.salud() + ".png"
+	override method image() = "barraVida/barra-" + tony.salud() + ".png"
 	
 	
 	//no nos deja tener el método solamente en la clase abstracta
@@ -148,4 +148,11 @@ object tablon{
 	var property position = game.at(0,0)
 	
 	method image() = "fondo_tablones.png"
+}
+
+class Arbol inherits Elementos{
+	var property position
+	override method image() = "elementosEscenario/arbol_1.png"
+	method visual() = game.addVisual(self)
+	override method chocasteCon(personaje){}
 }

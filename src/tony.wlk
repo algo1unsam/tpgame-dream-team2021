@@ -10,6 +10,7 @@ object tony {
 	var property perfil = "fren"
 	var property image = self.perfil()
 	var property salud = 13
+	var property escenario
 	var vidas = 3
 	var pociones = []
 	var armadura = []
@@ -25,22 +26,22 @@ object tony {
  	method coordenadas() = [self.position().x(), self.position().y()]
  
  	method moverArriba(){
- 		movimientos.moverUp(self) 
+ 		movimientos.puedoMoverArriba(self,self.escenario(),1) 
  		self.perfil("es")				 
  	}
  	
  	method moverAbajo(){
- 		movimientos.moverDown(self)
+ 		movimientos.puedoMoverAbajo(self,self.escenario(),1)
  		self.perfil("fren")
  	}
  	
  	method moverDerecha(){
- 		movimientos.moverRight(self)
+ 		movimientos.puedoMoverDerecha(self,self.escenario(),1)
  		self.perfil("der")
  	} 
  	
  	method moverIzquierda(){
- 		movimientos.moverLeft(self)
+ 		movimientos.puedoMoverIzquierda(self,self.escenario(),1)
  		self.perfil("izq")
  	}
  

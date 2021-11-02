@@ -5,6 +5,8 @@ import escenario.*
 program TonyGame {
 	//  CONFIG	
 	game.title("Avengers Endgame")
+	//game.cellSize(10)		// tamaño de celda 10 pixeles para que no quede la pantalla tan grande	// fondo del tablero
+	
 
 	//Programar evento
 	escenario.escenarioUno()

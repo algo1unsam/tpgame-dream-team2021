@@ -19,7 +19,6 @@ class Personajes inherits Elementos {
 class Zombi inherits Personajes{
 
 	var property perfil = "fren"	
-	var property coordenadas = [] //[x, y]
 	override method image() = "zombi_"+ self.perfil() +".png"
 	
 	override method recibirDanio(danio){
@@ -28,8 +27,8 @@ class Zombi inherits Personajes{
 	} 
 	
 	method queDropea(){
-		 if(movimientos.devuelveNum() == 4){ monedero.generarMoneda(5,self.position())}
-		 else if (movimientos.devuelveNum() == 3){  pociones.generarPocion(self.position())}
+		 if(movimientos.devuelveNum(0,4) == 4){ monedero.generarMoneda(5,self.position())}
+		 else if (movimientos.devuelveNum(0,4) == 3){  pociones.generarPocion(self.position())}
 }	
 	method zombiVivo(){
 		if(self.vida() <= 0){
@@ -62,13 +61,8 @@ object ataqueZombi{
 	
 	method generarZombis(maxZombis){
 		if (zombis.size() <= maxZombis){
-			const nuevoZombi = new Zombi(position = randomizer.emptyPosition(), vida = 100)
-			var aux = []
-			aux.addAll([nuevoZombi.position().x(), nuevoZombi.position().y()])
-			nuevoZombi.coordenadas(aux)			
-			game.addVisual(nuevoZombi)
-			//game.say(nuevoZombi,"position [" + nuevoZombi.puntoX()+" "+nuevoZombi.puntoY()+"]")
-			//game.say(nuevoZombi,"position " + nuevoZombi.coordenadas().get(0))
+			const nuevoZombi = new Zombi(position = game.at(movimientos.devuelveNumEntre(3,6),10), vida = 100)					
+			game.addVisual(nuevoZombi)			
 			zombis.add(nuevoZombi)
 			//self.moverALosZombis()
 		}

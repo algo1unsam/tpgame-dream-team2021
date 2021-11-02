@@ -12,33 +12,61 @@ object movimientos{
 	const fren = ""
 	const espal = ""
 	
-	method moverUp(objeto){
-		objeto.position(objeto.position().up(1))
+	method moverUp(objeto,number){
+		objeto.position(objeto.position().up(number))
 	}
 	
-	method moverDown(objeto){
-		objeto.position(objeto.position().down(1))
+	method moverDown(objeto,number){
+		objeto.position(objeto.position().down(number))
 	}
 	
-	method moverRight(objeto){
-		objeto.position(objeto.position().right(1))
+	method moverRight(objeto,number){
+		objeto.position(objeto.position().right(number))
 	}
 	
-	method moverLeft(objeto){
-		objeto.position(objeto.position().left(1))
+	method moverLeft(objeto,number){
+		objeto.position(objeto.position().left(number))
 	}
 	
-	method movimiento(personaje){
-		personaje.coordenadas().clear()
-		var aux = []
-		aux.addAll([personaje.position().x(), personaje.position().y()])
-		personaje.coordenadas(aux)
+	method puedoMoverArriba(objeto,escenarioActual,number){
+		const destino = objeto.position().up(1)
+		if( escenarioActual.noPasar().contains(destino) or objeto.position().y()> 9){
+			
+		}else{
+			self.moverUp(objeto,number)
+		}
 	}
 	
+	method puedoMoverAbajo(objeto,escenarioActual,number){
+		const destino = objeto.position().down(1)
+		if(escenarioActual.noPasar().contains(destino) or objeto.position().y()<0){
+			
+		}else{
+			self.moverDown(objeto,number)
+		}
+	}
 	
-	method puntoX (personaje) = personaje.coordenadas().get(0)
+	method puedoMoverDerecha(objeto,escenarioActual,number){
+		const destino = objeto.position().right(1)
+		if(escenarioActual.noPasar().contains(destino) or objeto.position().x() > 9){
+			
+		}else{
+			self.moverRight(objeto,number)
+		}
+	}
 	
-	method puntoY (personaje) = personaje.coordenadas().get(1)
+	method puedoMoverIzquierda(objeto,escenarioActual,number){
+		const destino = objeto.position().left(1)
+		if(escenarioActual.noPasar().contains(destino)  or objeto.position().x() <= 0){
+			
+		}else{
+			self.moverLeft(objeto,number)
+		}
+	}
+	
+	method puntoX (personaje) = personaje.position().x()
+	
+	method puntoY (personaje) = personaje.position().y()
 	
 	
 	//Metodos para mover al Zombi hasta Tony
@@ -47,57 +75,53 @@ object movimientos{
 		
 	method moverY(personaje){
 		if(self.puntoY(personaje) - self.puntoY(tony) > 0){
-			self.moverDown(personaje)
+			self.puedoMoverAbajo(personaje,tony.escenario(),1)
 			personaje.perfil("fren")
-			self.movimiento(personaje)
+			//self.movimiento(personaje)
 		}else if (self.puntoY(personaje) - self.puntoY(tony) < 0){
-			self.moverUp(personaje)
+			self.puedoMoverArriba(personaje,tony.escenario(),1)
 			personaje.perfil("espal")
-			self.movimiento(personaje)
+			//self.movimiento(personaje)
 		}
 		
 	}
 	
 	method moverX(personaje){
 		if(self.puntoX(personaje) - self.puntoX(tony) > 0){
-			self.moverLeft(personaje)
+			self.puedoMoverIzquierda(personaje,tony.escenario(),1)
 			//100.times({i => self.perfil("izq_0")})
 			personaje.perfil("izq_1")
-			self.movimiento(personaje)
+			
 		}else if (self.puntoX(personaje) - self.puntoX(tony) < 0){
-			self.moverRight(personaje)
+			self.puedoMoverDerecha(personaje,tony.escenario(),1)
 			//100.times({i => self.perfil("der_0")}) 
 			personaje.perfil("der_1")
-			self.movimiento(personaje)
+			
 		}
 	}
 	
 	
 	
 	method moverArriba(personaje){
-		self.moverUp(personaje)
+		self.moverUp(personaje,1)
 		personaje.perfil("espal")
-		self.movimiento(personaje)
 	}
 	
 	method moverAbajo(personaje){
-		self.moverDown(personaje)
+		self.moverDown(personaje,1)
 		personaje.perfil("fren")
-		self.movimiento(personaje)
 	}
 	
 	method moverDerecha(personaje){
-		self.moverRight(personaje)
+		self.moverRight(personaje,1)
 		//100.times({i => self.perfil("der_0")}) 
 		personaje.perfil("der")
-		self.movimiento(personaje)
 	}
 	
 	method moverIzquierda(personaje){
-		self.moverLeft(self)
+		self.moverLeft(self,1)
 		//100.times({i => self.perfil("izq_0")})
 		personaje.perfil("izq")
-		self.movimiento(personaje)
 	}
 	//metodo para mover a los zombis con un numero aleatorio.
 	method moverZombi(number,personaje){
@@ -112,33 +136,43 @@ object movimientos{
 		}
 	}
 	
-	method devuelveNum() = 0.randomUpTo(4).roundUp()	
+	method devuelveNum(min,max) = min.randomUpTo(max).roundUp()	
+	
+	method devuelveNumEntre(min,max){
+		var num = (min-1).randomUpTo(max).roundUp()
+		if (num == min or num ==max) {
+			return num
+		}else{
+			return self.devuelveNumEntre(min,max)
+		}
+	}
 		
-	method positivoNegativo() = if(self.devuelveNum() >= 3) self.devuelveNum() * -1 else self.devuelveNum()
+		
+	method positivoNegativo() = if(self.devuelveNum(0,4) >= 3) self.devuelveNum(0,4) * -1 else self.devuelveNum(0,4)
 		
 	method movimientoColeccion(coleccion){
-		const number = self.devuelveNum()
+		const number = self.devuelveNum(0,4)
 		if (number == 1){
-			coleccion.forEach({z => self.moverUp(z)})
+			coleccion.forEach({z => self.moverUp(z,1)})
 		}else if (number == 2){
-			coleccion.forEach({z => self.moverDown(z)})
+			coleccion.forEach({z => self.moverDown(z,1)})
 		}else if (number == 3){
-			coleccion.forEach({z => self.moverRight(z)})
+			coleccion.forEach({z => self.moverRight(z,1)})
 		}else if (number == 4){
-			coleccion.forEach({z => self.moverLeft(z)})
+			coleccion.forEach({z => self.moverLeft(z,1)})
 		}
 	}
 	
 	method movimientoObjeto(objeto){
-		const number = self.devuelveNum()
+		const number = self.devuelveNum(0,4)
 		if (number == 1){
-			self.moverUp(objeto)
+			self.moverUp(objeto,1)
 		}else if (number == 2){
-			self.moverDown(objeto)
+			self.moverDown(objeto,1)
 		}else if (number == 3){
-			self.moverRight(objeto)
+			self.moverRight(objeto,1)
 		}else if (number == 4){
-			self.moverLeft(objeto)
+			self.moverLeft(objeto,1)
 		}
 	}
 }
