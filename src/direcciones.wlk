@@ -4,9 +4,7 @@ import tony.*
 
 //para los objetos que se mueven solos, aca se podra configurar para que tambien cambie de imagen un Zombi
 
-
-object movimientos{
-	
+class MovimientosAbstractos{
 	const der = ""
 	const izq = ""
 	const fren = ""
@@ -28,41 +26,13 @@ object movimientos{
 		objeto.position(objeto.position().left(number))
 	}
 	
-	method puedoMoverArriba(objeto,escenarioActual,number){
-		const destino = objeto.position().up(1)
-		if( escenarioActual.noPasar().contains(destino) or objeto.position().y()> 9){
-			
-		}else{
-			self.moverUp(objeto,number)
-		}
-	}
+	method puedoMoverArriba(objeto,escenarioActual)
 	
-	method puedoMoverAbajo(objeto,escenarioActual,number){
-		const destino = objeto.position().down(1)
-		if(escenarioActual.noPasar().contains(destino) or objeto.position().y()<0){
-			
-		}else{
-			self.moverDown(objeto,number)
-		}
-	}
+	method puedoMoverAbajo(objeto,escenarioActual)
 	
-	method puedoMoverDerecha(objeto,escenarioActual,number){
-		const destino = objeto.position().right(1)
-		if(escenarioActual.noPasar().contains(destino) or objeto.position().x() > 9){
-			
-		}else{
-			self.moverRight(objeto,number)
-		}
-	}
+	method puedoMoverDerecha(objeto,escenarioActual)
 	
-	method puedoMoverIzquierda(objeto,escenarioActual,number){
-		const destino = objeto.position().left(1)
-		if(escenarioActual.noPasar().contains(destino)  or objeto.position().x() <= 0){
-			
-		}else{
-			self.moverLeft(objeto,number)
-		}
-	}
+	method puedoMoverIzquierda(objeto,escenarioActual)		
 	
 	method puntoX (personaje) = personaje.position().x()
 	
@@ -75,11 +45,11 @@ object movimientos{
 		
 	method moverY(personaje){
 		if(self.puntoY(personaje) - self.puntoY(tony) > 0){
-			self.puedoMoverAbajo(personaje,tony.escenario(),1)
+			self.puedoMoverAbajo(personaje,tony.escenario())
 			personaje.perfil("fren")
 			//self.movimiento(personaje)
 		}else if (self.puntoY(personaje) - self.puntoY(tony) < 0){
-			self.puedoMoverArriba(personaje,tony.escenario(),1)
+			self.puedoMoverArriba(personaje,tony.escenario())
 			personaje.perfil("espal")
 			//self.movimiento(personaje)
 		}
@@ -88,12 +58,12 @@ object movimientos{
 	
 	method moverX(personaje){
 		if(self.puntoX(personaje) - self.puntoX(tony) > 0){
-			self.puedoMoverIzquierda(personaje,tony.escenario(),1)
+			self.puedoMoverIzquierda(personaje,tony.escenario())
 			//100.times({i => self.perfil("izq_0")})
 			personaje.perfil("izq_1")
 			
 		}else if (self.puntoX(personaje) - self.puntoX(tony) < 0){
-			self.puedoMoverDerecha(personaje,tony.escenario(),1)
+			self.puedoMoverDerecha(personaje,tony.escenario())
 			//100.times({i => self.perfil("der_0")}) 
 			personaje.perfil("der_1")
 			
@@ -177,3 +147,81 @@ object movimientos{
 	}
 }
 
+
+
+object movimientos inherits MovimientosAbstractos{
+	override method puedoMoverArriba(objeto,escenarioActual){
+		const destino = objeto.position().up(1)
+		if( escenarioActual.noPasar().contains(destino) or objeto.position().y()> 9){
+			
+		}else{
+			self.moverUp(objeto,1)
+		}
+	}
+	
+	override method puedoMoverAbajo(objeto,escenarioActual){
+		const destino = objeto.position().down(1)
+		if(escenarioActual.noPasar().contains(destino) or objeto.position().y()<0){
+			
+		}else{
+			self.moverDown(objeto,1)
+		}
+	}
+	
+	override method puedoMoverDerecha(objeto,escenarioActual){
+		const destino = objeto.position().right(1)
+		if(escenarioActual.noPasar().contains(destino) or objeto.position().x() > 9){
+			
+		}else{
+			self.moverRight(objeto,1)
+		}
+	}
+	
+	override method puedoMoverIzquierda(objeto,escenarioActual){
+		const destino = objeto.position().left(1)
+		if(escenarioActual.noPasar().contains(destino)  or objeto.position().x() <= 0){
+			
+		}else{
+			self.moverLeft(objeto,1)
+		}
+	}
+	
+}
+
+object movimientosTony inherits MovimientosAbstractos{
+	override method puedoMoverArriba(objeto,escenarioActual){
+		const destino = objeto.position().up(1)
+		if( escenarioActual.noPasar().contains(destino) or objeto.position().y()> 9){
+			
+		}else{
+			self.moverUp(objeto,1)
+		}
+	}
+	
+	override method puedoMoverAbajo(objeto,escenarioActual){
+		const destino = objeto.position().down(1)
+		if(escenarioActual.noPasar().contains(destino) or objeto.position().y()<0){
+			
+		}else{
+			self.moverDown(objeto,1)
+		}
+	}
+	
+	override method puedoMoverDerecha(objeto,escenarioActual){
+		const destino = objeto.position().right(1)
+		if(escenarioActual.noPasar().contains(destino) or objeto.position().x() > 9){
+			
+		}else{
+			self.moverRight(objeto,1)
+		}
+	}
+	
+	override method puedoMoverIzquierda(objeto,escenarioActual){
+		const destino = objeto.position().left(1)
+		if(escenarioActual.noPasar().contains(destino)  or objeto.position().x() <= 0){
+			
+		}else{
+			self.moverLeft(objeto,1)
+		}
+	}
+}

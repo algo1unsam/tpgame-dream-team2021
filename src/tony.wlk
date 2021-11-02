@@ -26,22 +26,22 @@ object tony {
  	method coordenadas() = [self.position().x(), self.position().y()]
  
  	method moverArriba(){
- 		movimientos.puedoMoverArriba(self,self.escenario(),1) 
+ 		movimientosTony.puedoMoverArriba(self,self.escenario()) 
  		self.perfil("es")				 
  	}
  	
  	method moverAbajo(){
- 		movimientos.puedoMoverAbajo(self,self.escenario(),1)
+ 		movimientosTony.puedoMoverAbajo(self,self.escenario())
  		self.perfil("fren")
  	}
  	
  	method moverDerecha(){
- 		movimientos.puedoMoverDerecha(self,self.escenario(),1)
+ 		movimientosTony.puedoMoverDerecha(self,self.escenario())
  		self.perfil("der")
  	} 
  	
  	method moverIzquierda(){
- 		movimientos.puedoMoverIzquierda(self,self.escenario(),1)
+ 		movimientosTony.puedoMoverIzquierda(self,self.escenario())
  		self.perfil("izq")
  	}
  
