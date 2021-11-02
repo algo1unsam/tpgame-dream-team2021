@@ -45,6 +45,7 @@ object escenario{
 		
 		//Juego Corriendo cosas
 		game.addVisual(barraDeVida)
+		game.addVisual(tonyVidas)
 		game.onTick(15000, "hordaZombis", { => ataqueZombi.generarHordaZombi(3)})
 		
 		

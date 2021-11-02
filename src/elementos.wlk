@@ -144,10 +144,16 @@ object barraDeVida inherits Elementos {
 	
 }
 
+object tonyVidas{
+	var property position = game.at(4,0)
+	method image() = "tony_fren_vida.png"
+}
+
 object tablon{
 	var property position = game.at(0,0)
 	
-	method image() = "fondo_tablones.png"
+	method image() = "fondo_tablones.png"	
+	
 }
 
 class Arbol inherits Elementos{
