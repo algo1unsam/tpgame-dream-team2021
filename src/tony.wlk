@@ -5,16 +5,12 @@ import enemigos.*
 import direcciones.*
 
 object tony {
-	var property codigo = 0
 	var property position = game.center()
 	var property perfil = "fren"
 	var property image = self.perfil()
 	var property salud = 13
 	var property escenario
 	var vidas = 3
-	var pociones = []
-	var armadura = []
-	var poder = 0
 	var points = 0
 	 
 	method image() = "tony_" + self.perfil() +".png"

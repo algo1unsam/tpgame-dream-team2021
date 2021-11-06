@@ -9,7 +9,7 @@ program TonyGame {
 	
 
 	//Programar evento
-	escenario.escenarioUno()
+	escenario.escenario(1)
 
  	//COMIENZA
  	game.start()

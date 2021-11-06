@@ -215,7 +215,8 @@ object movimientosTony inherits MovimientosAbstractos{
 			self.moverRight(objeto,1)
 		}
 	}
-	
+	 
+	 
 	override method puedoMoverIzquierda(objeto,escenarioActual){
 		const destino = objeto.position().left(1)
 		if(escenarioActual.noPasar().contains(destino)  or objeto.position().x() <= 0){

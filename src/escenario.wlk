@@ -4,7 +4,6 @@ import wollok.game.*
 import objetosParaImplementar.*
 import enemigos.*
 
-
 object escenario{
 	
 	var property arboleda = [new Arbol(position = game.at(0,9)),new Arbol(position = game.at(1,9)),
@@ -23,6 +22,23 @@ object escenario{
 	
 	var property arboleda2 = [new Arbol(position = game.at(9,9)),new Arbol(position = game.at(9,8)),new Arbol(position = game.at(9,7))]
 	
+	var property columnas = [new ColumnaPiedra(position = game.at(0,9)),new ColumnaPiedra(position = game.at(1,9)),
+							new ColumnaPiedra(position = game.at(2,9)),new ColumnaPiedra(position = game.at(4,9)),
+							new ColumnaPiedra(position = game.at(5,9)),new ColumnaPiedra(position = game.at(7,9)),
+							new ColumnaPiedra(position = game.at(8,9)),
+							new ColumnaPiedra(position = game.at(0,8)),
+							new ColumnaPiedra(position = game.at(0,5)),
+							new ColumnaPiedra(position = game.at(0,4)),
+							new ColumnaPiedra(position = game.at(0,3)),new ColumnaPiedra(position = game.at(9,5)),
+							new ColumnaPiedra(position = game.at(0,2)),new ColumnaPiedra(position = game.at(9,4)),
+							new ColumnaPiedra(position = game.at(0,1)),new ColumnaPiedra(position = game.at(9,3)),
+							new ColumnaPiedra(position = game.at(9,2)),new ColumnaPiedra(position = game.at(9,1)),
+							new ColumnaPiedra(position = game.at(0,0)),new ColumnaPiedra(position = game.at(9,0)),
+							new ColumnaPiedra(position = game.at(0,9))]
+	
+	var property columnas2 = [new ColumnaPiedra(position = game.at(9,9)),new ColumnaPiedra(position = game.at(9,8)),new ColumnaPiedra(position = game.at(9,7))]
+	
+	
 	var property noPasar = #{game.at(0,9),game.at(1,9),game.at(2,9),game.at(4,9),game.at(5,9),
 							game.at(7,9),game.at(8,9),game.at(9,9),game.at(-1,9),game.at(-1,8),
 							game.at(-1,6),game.at(-1,5),game.at(-1,4),game.at(-1,3),game.at(-1,2),
@@ -34,34 +50,47 @@ object escenario{
 							game.at(5,0),game.at(6,0),game.at(7,0),game.at(8,0),game.at(9,0)
 	}
 	
-	method configuracionEscenario(){
-		//Configuracion del escenario, colliders, visuales, y teclas
-		tony.escenario(self)
-		//visual algunos		
-		game.addVisualCharacter(tony)		
-		game.height(11)
-		game.width(10)
+	method configuracionEscenarioAux(valor){
+		if (valor==1){
+		game.ground("pasto50x50.jpg")	
 		arboleda.forEach({a => a.visual()})
 		game.addVisual(cueva)
 		arboleda2.forEach({a => a.visual()})
-		
-		game.addVisual(tablon)
-		
-		//Juego Corriendo cosas
-		game.addVisual(barraDeVida)
-		game.addVisual(tonyVidas)
 		game.onTick(15000, "hordaZombis", { => ataqueZombi.generarHordaZombi(3)})
-		
-		
-		
-		//quedo deprecado dado que ahora los zombis dan monedas
-		//game.onTick(6000, "agregaMonedas", { => monedero.generarMoneda(5)  })
 		game.onTick(8000, "agregaZombis", { => ataqueZombi.generarZombis(3)  })
 		game.onTick(1000, "moverZombis", { => ataqueZombi.moverALosZombis()  })		
+		}
+		
+		else if(valor == 2){
+		game.addVisual(fondoCueva)	
+		columnas.forEach({a => a.visual()})
+		columnas2.forEach({a => a.visual()})
+		game.onTick(15000, "hordaZombis", { => ataqueZombi.generarHordaZombi(3)})
+		game.onTick(8000, "agregaZombis", { => ataqueZombi.generarZombis(3)  })
+		game.onTick(1000, "moverZombis", { => ataqueZombi.moverALosZombis()  })			
+		}
+		
+	}
+	
+	method configuracionEscenario(valor){
+		//Configuracion del escenario, colliders, visuales, y teclas
+		
+		tony.escenario(self)
+		//visual algunos			
+		game.height(11)
+		game.width(10)
+		
+		self.configuracionEscenarioAux(valor)
+		game.addVisualCharacter(tony)
+		game.addVisual(tablon)
+		game.addVisual(monedasTablon)
+		//Juego Corriendo cosas
+		
+		game.addVisual(barraDeVida)
+		game.addVisual(tonyVidas)
+		
 		game.onTick(200,"actualiza imagen objetos", { => monedero.girarMonedas()})
 		game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
-		
-		//keyboard.s().onPressDo {game.say(tony, "position: " + tony.position().x())} //para probar el metodo .position()
 		
 		//Teclado
 		keyboard.x().onPressDo { tony.atacar(101) }	
@@ -72,19 +101,10 @@ object escenario{
 		keyboard.a().onPressDo {tony.moverIzquierda()}
 	}
 	
-	method escenarioUno(){
-		//configuracion del escenario 1
-		game.ground("pasto50x50.jpg")	 	
+	method escenario(valor){
+		//configuracion del escenario 1 	
 		//4.times({ i => (game.addVisual(new Pocion(position = randomizer.emptyPosition()) ) ) })
-		self.configuracionEscenario()
-	}
-	
-	method escenarioDos(){
-		//configuracion del escenario 2
-		
-		//no se logra modificar el fondo al cambiar de escenario
-		game.addVisual(imagenFondoEscenarioDos)
-		self.configuracionEscenario()
+		self.configuracionEscenario(valor)
 	}
 	
 	method removerVisualEscenario(){
@@ -93,10 +113,4 @@ object escenario{
 	}
 }
 
-object imagenFondoEscenarioDos{
-	var property position = game.at(5,5)
-	method image() = "auto.jpg"
-	method chocasteCon(objeto){
-		
-	}
-}
+

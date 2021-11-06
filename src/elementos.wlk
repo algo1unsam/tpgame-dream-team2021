@@ -72,13 +72,15 @@ object cueva inherits Elementos{
 	override method chocasteCon(personaje){
 		if(personaje.points() > 50){
 			escenario.removerVisualEscenario()
-			escenario.escenarioDos()
+			escenario.escenario(2)
 		}
 		else{
 			game.say(tony,"Todavía no tengo suficientes monedas")
 		}
 	}	
 }
+
+
 
 //Se generan monedas y colección de monedas y se les modifica la 
 //imagen para dar sensación de movimiento
@@ -154,6 +156,25 @@ object tablon{
 	
 	method image() = "fondo_tablones.png"	
 	
+}
+
+object monedasTablon{
+	var property position = game.at(1,0)
+	
+	method image() = "monedita.png"
+}
+
+object fondoCueva inherits Elementos {
+	var property position = game.at(0,1)
+	method image() = "Fondo Rocas.jpg"
+	override method chocasteCon(personaje){}
+}
+	
+class ColumnaPiedra inherits Elementos{
+	var property position
+	override method image() = "elementosEscenario/Columnas.png"
+	method visual() = game.addVisual(self)
+	override method chocasteCon(personaje){}
 }
 
 class Arbol inherits Elementos{
