@@ -71,8 +71,9 @@ object cueva inherits Elementos{
 	
 	override method chocasteCon(personaje){
 		if(personaje.points() > 50){
-			escenario.removerVisualEscenario()
-			escenario.escenario(2)
+			escenario.removerNivel()
+			var nivel2 = new Nivel2() 
+			escenario.iniciarNivel(nivel2)
 		}
 		else{
 			game.say(tony,"Todavía no tengo suficientes monedas")
@@ -166,9 +167,16 @@ object monedasTablon{
 
 object fondoCueva inherits Elementos {
 	var property position = game.at(0,1)
-	method image() = "Fondo Rocas.jpg"
+	override method image() = "Fondo Rocas.jpg"
 	override method chocasteCon(personaje){}
 }
+
+object fondoPasto inherits Elementos {
+	var property position = game.at(0,1)
+	override method image() = "pasto50x50.jpg"
+	override method chocasteCon(personaje){}
+}
+
 	
 class ColumnaPiedra inherits Elementos{
 	var property position

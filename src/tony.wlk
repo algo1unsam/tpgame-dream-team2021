@@ -11,7 +11,7 @@ object tony {
 	var property salud = 13
 	var property escenario
 	var vidas = 3
-	var points = 0
+	var property points = 0
 	 
 	method image() = "tony_" + self.perfil() +".png"
 	 
@@ -46,9 +46,9 @@ object tony {
  		objetosDebajo.forEach({ objeto =>  objeto.recibirDanio(danio) })
  	}
  
-	method aumentarPoder(){
-		poder += pociones.sum({ pocion => pocion.mana() })
-	}
+	//method aumentarPoder(){
+	//	poder += pociones.sum({ pocion => pocion.mana() })
+	//}
 	
 	method restarSalud(menosSalud){
 		if (salud - menosSalud > 0){
@@ -87,9 +87,9 @@ object tony {
 	
 	method sigueConVida() = vidas > 0
 	
-	method poder(){
-		game.say(self,"He Aumentado mi poder a :" + poder)
-	}
+	//method poder(){
+	//	game.say(self,"He Aumentado mi poder a :" + poder)
+	//}
 	
 	method addPoints(addPoint){
 		points += addPoint	
