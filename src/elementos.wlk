@@ -185,6 +185,14 @@ class ColumnaPiedra inherits Elementos{
 	override method chocasteCon(personaje){}
 }
 
+class Roca inherits Elementos{
+	var property position
+	override method image() = "elementosEscenario/roca.png"
+	method visual() = game.addVisual(self)
+	override method chocasteCon(personaje){}
+}
+
+
 class Arbol inherits Elementos{
 	var property position
 	override method image() = "elementosEscenario/arbol_1.png"

@@ -3,13 +3,13 @@ import elementos.*
 import objetosParaImplementar.*
 import enemigos.*
 import direcciones.*
+import escenario.*
 
 object tony {
 	var property position = game.center()
 	var property perfil = "fren"
 	var property image = self.perfil()
 	var property salud = 13
-	var property escenario
 	var vidas = 3
 	var property points = 0
 	 
@@ -22,22 +22,22 @@ object tony {
  	method coordenadas() = [self.position().x(), self.position().y()]
  
  	method moverArriba(){
- 		movimientosTony.puedoMoverArriba(self,self.escenario()) 
+ 		movimientosTony.puedoMoverArriba(self,escenario.nivel()) 
  		self.perfil("es")				 
  	}
  	
  	method moverAbajo(){
- 		movimientosTony.puedoMoverAbajo(self,self.escenario())
+ 		movimientosTony.puedoMoverAbajo(self,escenario.nivel())
  		self.perfil("fren")
  	}
  	
  	method moverDerecha(){
- 		movimientosTony.puedoMoverDerecha(self,self.escenario())
+ 		movimientosTony.puedoMoverDerecha(self,escenario.nivel())
  		self.perfil("der")
  	} 
  	
  	method moverIzquierda(){
- 		movimientosTony.puedoMoverIzquierda(self,self.escenario())
+ 		movimientosTony.puedoMoverIzquierda(self,escenario.nivel())
  		self.perfil("izq")
  	}
  

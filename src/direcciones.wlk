@@ -1,6 +1,7 @@
 import wollok.game.*
 import objetosParaImplementar.*
 import tony.*
+import escenario.*
 
 //para los objetos que se mueven solos, aca se podra configurar para que tambien cambie de imagen un Zombi
 
@@ -45,11 +46,11 @@ class MovimientosAbstractos{
 		
 	method moverY(personaje){
 		if(self.puntoY(personaje) - self.puntoY(tony) > 0){
-			self.puedoMoverAbajo(personaje,tony.escenario())
+			self.puedoMoverAbajo(personaje,escenario.nivel())
 			personaje.perfil("fren")
 			//self.movimiento(personaje)
 		}else if (self.puntoY(personaje) - self.puntoY(tony) < 0){
-			self.puedoMoverArriba(personaje,tony.escenario())
+			self.puedoMoverArriba(personaje,escenario.nivel())
 			personaje.perfil("espal")
 			//self.movimiento(personaje)
 		}
@@ -58,12 +59,12 @@ class MovimientosAbstractos{
 	
 	method moverX(personaje){
 		if(self.puntoX(personaje) - self.puntoX(tony) > 0){
-			self.puedoMoverIzquierda(personaje,tony.escenario())
+			self.puedoMoverIzquierda(personaje,escenario.nivel())
 			//100.times({i => self.perfil("izq_0")})
 			personaje.perfil("izq_1")
 			
 		}else if (self.puntoX(personaje) - self.puntoX(tony) < 0){
-			self.puedoMoverDerecha(personaje,tony.escenario())
+			self.puedoMoverDerecha(personaje,escenario.nivel())
 			//100.times({i => self.perfil("der_0")}) 
 			personaje.perfil("der_1")
 			
