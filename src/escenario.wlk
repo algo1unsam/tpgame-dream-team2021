@@ -49,14 +49,9 @@ class Nivel{
 	}
 		
 	method bloqueados(){
-		noPasar.addAll(#{game.at(0,9),game.at(1,9),game.at(2,9),game.at(4,9),game.at(5,9),
-					   game.at(7,9),game.at(8,9),game.at(9,9),game.at(-1,9),game.at(-1,8),
-					   game.at(-1,6),game.at(-1,5),game.at(-1,4),game.at(-1,3),game.at(-1,2),
-					   game.at(-1,1),game.at(-1,0),game.at(9,9),game.at(9,8),game.at(9,7),
-					   game.at(9,6),game.at(9,5),game.at(9,4),game.at(9,3),game.at(9,2),
-					   game.at(9,1),game.at(9,0),game.at(0,10),game.at(1,10),game.at(2,10),
-					   game.at(4,10),game.at(5,10),game.at(7,10),game.at(8,10),game.at(9,10),
-					   game.at(0,0),game.at(1,0),game.at(2,0),game.at(3,0),game.at(4,0),
+		noPasar.addAll(objetos.map({i => i.position()}))
+		noPasar.addAll(objetosExtra.map({i => i.position()}))
+		noPasar.addAll(#{game.at(0,0),game.at(1,0),game.at(2,0),game.at(3,0),game.at(4,0),
 					   game.at(5,0),game.at(6,0),game.at(7,0),game.at(8,0),game.at(9,0)})
 	}
 	method removerVisualEscenario(){
