@@ -49,18 +49,9 @@ class Coin inherits Objetos{
 		return "moneda_" + numero + ".png"
 	}	
 	
-	method numeroImagen(){
-		if(numero < 3){
-			numero += 1
-		}
-		
-		else{
-			numero = 0
-		}
-		return numero
-	}
-}
+	method numeroImagen() = if(numero < 3) numero += 1 else numero = 0
 
+}
 
 //Cuando se interactua con la cueva y se cumple la condicion, se modificar el escenario
 //todavía no logré hacer que cambie el fondo con el game.ground("imagen")

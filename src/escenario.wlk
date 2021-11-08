@@ -10,6 +10,8 @@ object escenario{
 		
 	method iniciarNivel(nuevoNivel){
 		tony.points(0)
+		//prueba, despues borrar el golem
+		
 		nuevoNivel.configuracionFondo()
 		nuevoNivel.configuracionInicial()
 		nuevoNivel.configuracionTeclado()
@@ -35,7 +37,14 @@ class Nivel{
 		game.height(11)
 		game.width(10)
 		game.addVisualCharacter(tony)		
-		game.onTick(200,"actualiza imagen objetos", { => monedero.girarMonedas()})
+		game.onTick(200,"actualiza imagen monedas", { => monedero.girarMonedas()})
+		//prueba con Golem
+		game.onTick(200,"actualiza imagen golem", { => golem.numeroImagen(10)})
+		game.schedule(3400,{  => game.removeTickEvent("actualiza imagen golem")})
+		game.schedule(3500,{  => golem.numero(1) })
+		game.schedule(3600,{  => golem.estado("")})
+		game.schedule(3800,{  => game.onTick(200,"actualiza imagen golem", { => golem.numeroImagen(4)})})
+		//
 		game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
 	}
 	
@@ -65,6 +74,8 @@ class Nivel{
 	
 	method configuracionVisual(){}
 	
+	method moverObjetosVisual(){}	
+
 	method configuracionEscenario(){		
 		
 	}		
@@ -120,6 +131,7 @@ class Nivel1 inherits Nivel{
 		game.addVisual(monedasTablon)
 		game.addVisual(barraDeVida)
 		game.addVisual(tonyVidas)
+		game.addVisual(golem)
 	}
 	
 	override method configuracionEscenario(){
@@ -176,6 +188,7 @@ class Nivel2 inherits Nivel{
 		game.addVisual(barraDeVida)
 		game.addVisual(tonyVidas)
 	}
+	
 	
 	override method configuracionEscenario(){
 		game.onTick(12000, "hordaZombis", { => ataqueZombi.generarHordaZombi(3)})

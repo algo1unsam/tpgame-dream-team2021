@@ -88,3 +88,33 @@ object ataqueZombi{
 	method removerZombi(zombi) = zombis.remove(zombi)
 		
 }
+
+object golem inherits Elementos{
+	
+	var property numero = 1
+	
+	var property estado = "activando_"
+	
+	var property position = game.at(5,8)
+	
+	override method chocasteCon(tony){}
+	
+	override method image() = "Golem/golem_" + estado + numero  + ".png"	
+	
+	//cuando activa el golem y ataca(además modifica animación)
+ /* 	method rampage(){
+		game.onTick(200,"actualiza imagen golem", { => self.numeroImagen(4)})
+		game.schedule(3500,{game.removeTickEvent("actualiza imagen golem")})
+		numero = 1
+		self.estado()
+		game.onTick(200,"actualiza golem rampage",{ => self.numeroImagen(10)})
+		game.schedule(3500,{game.removeTickEvent("actualiza golem rampage")})
+		numero = 1
+		self.estado()
+	}*/
+	
+	method numeroImagen(valor) = if(numero < valor) numero += 1 else numero = 1
+
+	method estado() = if (estado == "") estado = "activando_" else estado = ""
+
+}
