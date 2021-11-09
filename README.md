@@ -25,4 +25,4 @@ X: Pegar (Ataca al Zombi)
 
 - Curso/Facultad: Algoritmos 1 - UNSAM
 - Versión de wollok: 3.0
-- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
+- Una vez terminado, no tenemos problemas en que el repositorio sea público
