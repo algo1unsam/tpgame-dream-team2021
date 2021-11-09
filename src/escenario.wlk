@@ -38,13 +38,6 @@ class Nivel{
 		game.width(10)
 		game.addVisualCharacter(tony)		
 		game.onTick(200,"actualiza imagen monedas", { => monedero.girarMonedas()})
-		//prueba con Golem
-		game.onTick(200,"actualiza imagen golem", { => golem.numeroImagen(10)})
-		game.schedule(3400,{  => game.removeTickEvent("actualiza imagen golem")})
-		game.schedule(3500,{  => golem.numero(1) })
-		game.schedule(3600,{  => golem.estado("")})
-		game.schedule(3800,{  => game.onTick(200,"actualiza imagen golem", { => golem.numeroImagen(4)})})
-		//
 		game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
 	}
 	
@@ -66,8 +59,21 @@ class Nivel{
 	method removerVisualEscenario(){
 		//remover todos los visuales del escenario
 		game.clear()
+	}	
+	
+	method configuracionGolem(){
+		game.onTick(200, "actualiza imagen golem", { => golem.numeroImagen(21)})
+		game.onTick(2000, "mover golem", { => golem.sigueATony()  })
+		game.onTick(2000, "golem ataca", { => golem.atacar()})
 	}
 	
+	method configuracionZombis(){
+		game.onTick(15000, "hordaZombis", { => ataqueZombi.generarHordaZombi(3)})
+		game.onTick(8000, "agregaZombis", { => ataqueZombi.generarZombis(3)  })
+		game.onTick(1000, "moverZombis", { => ataqueZombi.moverALosZombis()  })
+	}
+	
+		
 	method configuracionFondo(){}
 	
 	method instanciarObjetos(){}
@@ -76,10 +82,7 @@ class Nivel{
 	
 	method moverObjetosVisual(){}	
 
-	method configuracionEscenario(){		
-		
-	}		
-	
+	method configuracionEscenario(){}	
 }
 
 class Nivel1 inherits Nivel{
@@ -135,10 +138,8 @@ class Nivel1 inherits Nivel{
 	}
 	
 	override method configuracionEscenario(){
-		
-		game.onTick(15000, "hordaZombis", { => ataqueZombi.generarHordaZombi(3)})
-		game.onTick(8000, "agregaZombis", { => ataqueZombi.generarZombis(3)  })
-		game.onTick(1000, "moverZombis", { => ataqueZombi.moverALosZombis()  })	
+		self.configuracionGolem()
+		self.configuracionZombis()
 	}
 		
 }
@@ -183,10 +184,13 @@ class Nivel2 inherits Nivel{
 		objetos.forEach({a => a.visual()})	
 		game.addVisual(cueva)
 		objetosExtra.forEach({a => a.visual()})
+		game.onTick(200, "actualiza imagen golem", { => golem.numeroImagen(21)})
+		game.onTick(500, "moverGolem", { => golem.sigueATony()  })
 		game.addVisual(tablon)
 		game.addVisual(monedasTablon)
 		game.addVisual(barraDeVida)
 		game.addVisual(tonyVidas)
+		
 	}
 	
 	

@@ -6,10 +6,6 @@ import escenario.*
 //para los objetos que se mueven solos, aca se podra configurar para que tambien cambie de imagen un Zombi
 
 class MovimientosAbstractos{
-	const der = ""
-	const izq = ""
-	const fren = ""
-	const espal = ""
 	
 	method moverUp(objeto,number){
 		objeto.position(objeto.position().up(number))
@@ -27,6 +23,7 @@ class MovimientosAbstractos{
 		objeto.position(objeto.position().left(number))
 	}
 	
+
 	method puedoMoverArriba(objeto,escenarioActual)
 	
 	method puedoMoverAbajo(objeto,escenarioActual)
@@ -34,6 +31,7 @@ class MovimientosAbstractos{
 	method puedoMoverDerecha(objeto,escenarioActual)
 	
 	method puedoMoverIzquierda(objeto,escenarioActual)		
+	
 	
 	method puntoX (personaje) = personaje.position().x()
 	
@@ -67,9 +65,9 @@ class MovimientosAbstractos{
 			self.puedoMoverDerecha(personaje,escenario.nivel())
 			//100.times({i => self.perfil("der_0")}) 
 			personaje.perfil("der_1")
-			
 		}
-	}
+	}	
+		
 	
 	
 	
@@ -85,13 +83,11 @@ class MovimientosAbstractos{
 	
 	method moverDerecha(personaje){
 		self.moverRight(personaje,1)
-		//100.times({i => self.perfil("der_0")}) 
 		personaje.perfil("der")
 	}
 	
 	method moverIzquierda(personaje){
 		self.moverLeft(self,1)
-		//100.times({i => self.perfil("izq_0")})
 		personaje.perfil("izq")
 	}
 	//metodo para mover a los zombis con un numero aleatorio.
@@ -226,4 +222,27 @@ object movimientosTony inherits MovimientosAbstractos{
 			self.moverLeft(objeto,1)
 		}
 	}
+}
+
+
+object movimientoGolem inherits MovimientosAbstractos{
+	
+	override method moverX(personaje){
+		if(self.puntoX(personaje) - self.puntoX(tony) > 0){
+			self.moverLeft(personaje,1)
+			
+		}else if (self.puntoX(personaje) - self.puntoX(tony) < 0){
+			self.moverRight(personaje,1)
+		}
+	}
+
+	
+	override method puedoMoverArriba(objeto,escenarioActual){}
+	
+	override method puedoMoverAbajo(objeto,escenarioActual){}
+	
+	override method puedoMoverDerecha(objeto,escenarioActual){}
+	
+	override method puedoMoverIzquierda(objeto,escenarioActual){}	
+	
 }
