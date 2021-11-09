@@ -38,14 +38,7 @@ class Nivel{
 	var property objetosExtra = []	
 	var property noPasar = []
 			
-	method configuracionInicial(){
-		//visual algunos			
-		game.height(11)
-		game.width(10)
-		game.addVisualCharacter(tony)		
-		game.onTick(200,"actualiza imagen monedas", { => monedero.girarMonedas()})
-		game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
-	}
+	method configuracionInicial(){}
 	
 	method configuracionTeclado(){
 		keyboard.x().onPressDo { tony.atacar(101) }	
@@ -54,6 +47,7 @@ class Nivel{
 		keyboard.s().onPressDo {tony.moverAbajo()}
 		keyboard.d().onPressDo {tony.moverDerecha()}
 		keyboard.a().onPressDo {tony.moverIzquierda()}
+		keyboard.enter().onPressDo {self.pressEnter()}
 	}
 		
 	method bloqueados(){
@@ -89,9 +83,33 @@ class Nivel{
 	method moverObjetosVisual(){}	
 
 	method configuracionEscenario(){}	
+	
+	method pressEnter(){}
+}
+
+class Portada inherits Nivel{
+	
+	override method configuracionFondo(){
+		game.addVisual(fondoPortada)	
+	}
+	
+	override method pressEnter(){
+		const nivel1 = new Nivel1()
+		escenario.removerNivel()
+		escenario.iniciarNivel(nivel1)
+	}
 }
 
 class Nivel1 inherits Nivel{
+	
+	override method configuracionInicial(){
+		//visual algunos			
+		game.height(11)
+		game.width(10)
+		game.addVisualCharacter(tony)		
+		game.onTick(200,"actualiza imagen monedas", { => monedero.girarMonedas()})
+		game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
+	}
 	
 	override method configuracionFondo(){
 		game.addVisual(fondoPasto)	
@@ -151,6 +169,15 @@ class Nivel1 inherits Nivel{
 }
 
 class Nivel2 inherits Nivel{
+	
+	override method configuracionInicial(){
+		//visual algunos			
+		game.height(11)
+		game.width(10)
+		game.addVisualCharacter(tony)		
+		game.onTick(200,"actualiza imagen monedas", { => monedero.girarMonedas()})
+		game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
+	}
 	
 	override method configuracionFondo(){
 		game.addVisual(fondoCueva)	

@@ -207,6 +207,17 @@ object fondoPasto inherits Elementos {
 
 }
 
+object fondoPortada inherits Elementos {
+
+	var property position = game.at(0, 1)
+
+	override method image() = "TonyGame.png"
+
+	override method chocasteCon(personaje) {
+	}
+
+}
+
 class ColumnaPiedra inherits Elementos {
 
 	var property position

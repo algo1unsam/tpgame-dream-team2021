@@ -9,7 +9,7 @@ program TonyGame {
 	
 
 	//Programar evento
-	var nivel1 = new Nivel1()
+	const nivel1 = new Nivel1()
 	escenario.iniciarNivel(nivel1)
 
  	//COMIENZA
