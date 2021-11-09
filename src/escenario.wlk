@@ -25,6 +25,12 @@ object escenario{
 	method removerNivel(){
 		nivel.removerVisualEscenario()
 	}
+	
+	method perderVida(){
+		self.removerNivel()
+		self.iniciarNivel(nivel)
+	}
+	
 }
 
 class Nivel{
@@ -133,7 +139,7 @@ class Nivel1 inherits Nivel{
 		game.addVisual(tablon)
 		game.addVisual(monedasTablon)
 		game.addVisual(barraDeVida)
-		game.addVisual(tonyVidas)
+		coleccionVidas.image()
 		game.addVisual(golem)
 	}
 	
@@ -188,9 +194,8 @@ class Nivel2 inherits Nivel{
 		game.onTick(500, "moverGolem", { => golem.sigueATony()  })
 		game.addVisual(tablon)
 		game.addVisual(monedasTablon)
-		game.addVisual(barraDeVida)
-		game.addVisual(tonyVidas)
-		
+		game.addVisual(barraDeVida)		
+		coleccionVidas.image()
 	}
 	
 	

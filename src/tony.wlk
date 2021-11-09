@@ -53,10 +53,9 @@ object tony {
 	method restarSalud(menosSalud){
 		if (salud - menosSalud > 0){
 			salud -= menosSalud
-		//game.say(tony,"Me ataco un Zombi, mi salud es :" + salud)
-		self.estadoSalud()
+		//game.say(tony,"Me ataco un Zombi, mi salud es :" + salud)			
 		} else {
-			salud = 0
+			self.restaVida()
 		}
 	}
 	
@@ -68,21 +67,15 @@ object tony {
 		}
 	}
 	
-	method estadoSalud(){
-		if (salud <= 0){
-			self.restaVida()
-			if (self.sigueConVida()){
-				salud = 13
-			}
-			else{
-				game.say(self,"Me he quedado sin vidas")
-			}
-		}
-	}
-	
 	
 	method restaVida(){
-		vidas -= 1
+		if(self.sigueConVida()){
+			coleccionVidas.removerVida()
+			vidas -= 1
+			salud = 13						
+		}else{
+			salud = 0	
+		}
 	}
 	
 	method sigueConVida() = vidas > 0

@@ -28,9 +28,9 @@ class Zombi inherits Personajes {
 	}
 
 	method queDropea() {
-		if (movimientos.devuelveNum(0, 4) == 4) {
+		if (randomizer.devuelveNum(0,4) == 4) {
 			monedero.generarMoneda(5, self.position())
-		} else if (movimientos.devuelveNum(0, 4) == 3) {
+		} else if (randomizer.devuelveNum(0,4) == 3) {
 			pociones.generarPocion(self.position())
 		}
 	}
@@ -51,12 +51,11 @@ class Zombi inherits Personajes {
 
 	method sigueATony() {
 		if (movimientos.moverYorX(self)) {
-			movimientos.moverY(self)
+			movimientos.moverY(self)			
 		} else {
-			movimientos.moverX(self)
+			movimientos.moverX(self)			
 		}
-	}
-
+	}		
 }
 
 //genera una coleccion de Zombis
@@ -67,7 +66,7 @@ object ataqueZombi {
 
 	method generarZombis(maxZombis) {
 		if (zombis.size() <= maxZombis) {
-			const nuevoZombi = new Zombi(position = game.at(movimientos.devuelveNumEntre(3, 6), 10), vida = 100)
+			const nuevoZombi = new Zombi(position = game.at(randomizer.devuelveNumEntre(3, 6), 10), vida = 100)
 			game.addVisual(nuevoZombi)
 			zombis.add(nuevoZombi)
 		// self.moverALosZombis()

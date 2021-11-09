@@ -147,9 +147,23 @@ object barraDeVida inherits Elementos {
 
 }
 
-object tonyVidas {
+object coleccionVidas{
+	var property vidas = [new TonyVidas(position = game.at(5, 0)),new TonyVidas(position = game.at(4, 0)),new TonyVidas(position = game.at(3, 0))]
 
-	var property position = game.at(4, 0)
+	method removerVida(){
+		game.removeVisual(vidas.first())
+		vidas.remove(vidas.first())
+		
+	}
+	
+	method image() {
+		vidas.forEach({i => game.addVisual(i)})
+	}
+}
+
+class TonyVidas {
+
+	var property position
 
 	method image() = "tony_fren_vida.png"
 

@@ -18,4 +18,15 @@ object randomizer {
 		}
 	}
 	
+	method devuelveNum(min,max) = min.randomUpTo(max).roundUp()	
+	
+	method devuelveNumEntre(min,max){
+		const num = (min-1).randomUpTo(max).roundUp()
+		if (num == min or num ==max) {
+			return num
+		}else{
+			return self.devuelveNumEntre(min,max)
+		}
+	}	
+	
 }
