@@ -7,11 +7,16 @@ import enemigos.*
 object escenario{
 	
 	var property nivel
-		
+	/* 	
+	method iniciarNivel(nuevoNivel){
+		game.addVisual(fondoPortada)
+		game.schedule(5000,{ => self.iniciarNivelAux(nuevoNivel)})
+		game.schedule(5000,{ => game.removeVisual(fondoPortada)})
+	}
+	*/
 	method iniciarNivel(nuevoNivel){
 		tony.points(0)
 		//prueba, despues borrar el golem
-		
 		nuevoNivel.configuracionFondo()
 		nuevoNivel.configuracionInicial()
 		nuevoNivel.configuracionTeclado()
@@ -19,9 +24,17 @@ object escenario{
 		nuevoNivel.bloqueados()
 		nuevoNivel.configuracionVisual()
 		nuevoNivel.configuracionEscenario()
+		//self.configuracionSonido()
 		self.nivel(nuevoNivel)
 	}
 	
+	/* 
+	method configuracionSonido(){
+		if(not "musicaFondo.mpeg".played()){
+			game.onTick(203000, "actualiza sonido", { => sonidos.sonidoFondoEscenario() })
+		}
+	}
+	*/
 	method removerNivel(){
 		nivel.removerVisualEscenario()
 	}
@@ -30,6 +43,9 @@ object escenario{
 		self.removerNivel()
 		self.iniciarNivel(nivel)
 	}
+	
+	
+	method gameOver(){}
 	
 }
 
@@ -40,6 +56,8 @@ class Nivel{
 			
 	method configuracionInicial(){}
 	
+	method configuracionSonido(){}
+	
 	method configuracionTeclado(){
 		keyboard.x().onPressDo { tony.atacar(101) }	
 		keyboard.p().onPressDo {game.say(tony, "Puntaje Total: " + tony.points())}
@@ -47,7 +65,6 @@ class Nivel{
 		keyboard.s().onPressDo {tony.moverAbajo()}
 		keyboard.d().onPressDo {tony.moverDerecha()}
 		keyboard.a().onPressDo {tony.moverIzquierda()}
-		keyboard.enter().onPressDo {self.pressEnter()}
 	}
 		
 	method bloqueados(){
@@ -89,8 +106,13 @@ class Nivel{
 
 class Portada inherits Nivel{
 	
+	override method configuracionTeclado(){
+		keyboard.enter().onPressDo {self.pressEnter()}
+	}
+	
 	override method configuracionFondo(){
-		game.addVisual(fondoPortada)	
+		game.addVisual(fondoPortada)
+		start.actualizarStart()	
 	}
 	
 	override method pressEnter(){
@@ -104,9 +126,7 @@ class Nivel1 inherits Nivel{
 	
 	override method configuracionInicial(){
 		//visual algunos			
-		game.height(11)
-		game.width(10)
-		game.addVisualCharacter(tony)		
+		game.addVisualCharacter(tony)
 		game.onTick(200,"actualiza imagen monedas", { => monedero.girarMonedas()})
 		game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
 	}
@@ -158,11 +178,10 @@ class Nivel1 inherits Nivel{
 		game.addVisual(monedasTablon)
 		game.addVisual(barraDeVida)
 		coleccionVidas.image()
-		game.addVisual(golem)
+		
 	}
 	
 	override method configuracionEscenario(){
-		self.configuracionGolem()
 		self.configuracionZombis()
 	}
 		
@@ -172,8 +191,6 @@ class Nivel2 inherits Nivel{
 	
 	override method configuracionInicial(){
 		//visual algunos			
-		game.height(11)
-		game.width(10)
 		game.addVisualCharacter(tony)		
 		game.onTick(200,"actualiza imagen monedas", { => monedero.girarMonedas()})
 		game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
@@ -214,21 +231,22 @@ class Nivel2 inherits Nivel{
 	}
 	
 	override method configuracionVisual(){		
-		objetos.forEach({a => a.visual()})	
+		objetos.forEach({a => a.visual()})
+		cueva.position(game.at(8, 1))	
 		game.addVisual(cueva)
 		objetosExtra.forEach({a => a.visual()})
 		game.onTick(200, "actualiza imagen golem", { => golem.numeroImagen(21)})
 		game.onTick(500, "moverGolem", { => golem.sigueATony()  })
 		game.addVisual(tablon)
 		game.addVisual(monedasTablon)
-		game.addVisual(barraDeVida)		
+		game.addVisual(barraDeVida)
+		game.addVisual(golem)		
 		coleccionVidas.image()
 	}
 	
 	
 	override method configuracionEscenario(){
-		game.onTick(12000, "hordaZombis", { => ataqueZombi.generarHordaZombi(3)})
-		game.onTick(78000, "agregaZombis", { => ataqueZombi.generarZombis(3)  })
-		game.onTick(500, "moverZombis", { => ataqueZombi.moverALosZombis()  })	
+		self.configuracionGolem()
+		self.configuracionZombis()
 	}
 }

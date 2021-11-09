@@ -6,7 +6,6 @@ import escenario.*
 import enemigos.*
 
 class Elementos {
-	//
 
 	// agregando polimorfismo a todas las clases
 	// ----------------------------------------
@@ -148,18 +147,19 @@ object barraDeVida inherits Elementos {
 
 }
 
-object coleccionVidas{
-	var property vidas = [new TonyVidas(position = game.at(5, 0)),new TonyVidas(position = game.at(4, 0)),new TonyVidas(position = game.at(3, 0))]
+object coleccionVidas {
 
-	method removerVida(){
+	var property vidas = [ new TonyVidas(position = game.at(5, 0)), new TonyVidas(position = game.at(4, 0)), new TonyVidas(position = game.at(3, 0)) ]
+
+	method removerVida() {
 		game.removeVisual(vidas.first())
 		vidas.remove(vidas.first())
-		
 	}
-	
+
 	method image() {
-		vidas.forEach({i => game.addVisual(i)})
+		vidas.forEach({ i => game.addVisual(i)})
 	}
+
 }
 
 class TonyVidas {
@@ -208,14 +208,12 @@ object fondoPasto inherits Elementos {
 
 }
 
-object fondoPortada inherits Elementos {
+object fondoPortada {
 
-	var property position = game.at(0, 1)
+	var property position = game.at(0, 0)
+	var property imagen = "tony_game"
 
-	override method image() = "TonyGame.png"
-
-	override method chocasteCon(personaje) {
-	}
+	method image() = "Game_over_o_end/" + imagen + ".jpeg"
 
 }
 
@@ -272,9 +270,40 @@ class Espinas inherits Elementos {
 
 	method ataqueEspinas() = game.onTick(100, "mover espinas", { => movimientos.moverDown(self, 1) })
 
-	method agregarEspina(espinas){
+	/* 
+	 * method validarPosicion() = if (self.position() == tony.position()) tony.restarSalud(danio) else self.validarPosicionAux()
+
+	 * method validarPosicionAux() = if (self.position().y() == 1) self.removerTickYVisual() else movimientos.moverDown(self, 1)
+
+	 * method removerTickYVisual() {
+	 * 	game.removeVisual(self)
+	 * 	game.removeTickEvent("mover espinas")
+	 * }
+	 */
+	method agregarEspina(espinas) {
 		game.addVisual(espinas)
 		espinas.ataqueEspinas()
 	}
+
 }
 
+object start {
+
+	var property position = game.at(3,2)
+
+	method image() = "Game_over_o_end/start.png"
+
+	method actualizarStart() {
+		game.onTick(300, "actualizar Start", { => self.visual()})
+	}
+
+	method visual() {
+		if (game.hasVisual(self)) game.removeVisual(self) else game.addVisual(self)
+	}
+
+}
+
+object sonidos {
+	
+	method sonidoFondoEscenario() = "musicaFondo.mpeg".play()
+}

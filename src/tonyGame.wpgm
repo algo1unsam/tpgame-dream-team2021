@@ -6,11 +6,12 @@ program TonyGame {
 	//  CONFIG	
 	game.title("Avengers Endgame")
 	//game.cellSize(10)		// tamaño de celda 10 pixeles para que no quede la pantalla tan grande	// fondo del tablero
-	
+	game.height(11)
+	game.width(10)
 
 	//Programar evento
-	const nivel1 = new Nivel1()
-	escenario.iniciarNivel(nivel1)
+	const portada = new Portada()
+	escenario.iniciarNivel(portada)
 
  	//COMIENZA
  	game.start()
