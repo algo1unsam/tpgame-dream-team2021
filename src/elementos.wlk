@@ -6,6 +6,7 @@ import escenario.*
 import enemigos.*
 
 class Elementos {
+	//
 
 	// agregando polimorfismo a todas las clases
 	// ----------------------------------------
