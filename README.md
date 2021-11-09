@@ -1,4 +1,4 @@
-# Nombre del juego (<- borrar y completar)
+# Tony Game
 
 ## Equipo de desarrollo
 
