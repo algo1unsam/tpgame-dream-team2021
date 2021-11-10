@@ -111,7 +111,7 @@ object golem inherits Elementos {
 
 	method atacar(){
 		const espinas = new Espinas(position = self.position(), danio = 3)
-		espinas.agregarEspina(espinas)
+		espinas.agregarEspina()
 	}
 	// metodos para cuando muera el zombi o reciba danio
 	/* 

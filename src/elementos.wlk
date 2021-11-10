@@ -267,21 +267,28 @@ class Espinas inherits Elementos {
 	}
 
 	method ataqueEspinas() = game.onTick(100, "mover espinas", { => movimientos.moverDown(self, 1) })
-
-	/* 
-	 * method validarPosicion() = if (self.position() == tony.position()) tony.restarSalud(danio) else self.validarPosicionAux()
-
-	 * method validarPosicionAux() = if (self.position().y() == 1) self.removerTickYVisual() else movimientos.moverDown(self, 1)
-
-	 * method removerTickYVisual() {
-	 * 	game.removeVisual(self)
-	 * 	game.removeTickEvent("mover espinas")
-	 * }
-	 */
-	method agregarEspina(espinas) {
-		game.addVisual(espinas)
-		espinas.ataqueEspinas()
+	
+	method agregarEspina() {
+		game.addVisual(self)
+		self.ataqueEspinas()
+		game.schedule(1500, { => self.tieneVisual()})
+		
 	}
+	
+	method tieneVisual(){
+		if(game.hasVisual(self)){
+			game.removeVisual(self)
+			
+		}
+		game.removeTickEvent("mover espinas")
+	}
+	
+	//if (game.hasVisual(self))
+	
+	method validarPosicion(){
+		
+	} 
+	//game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
 
 }
 

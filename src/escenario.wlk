@@ -7,13 +7,7 @@ import enemigos.*
 object escenario{
 	var cont = 1
 	var property nivel
-	/* 	
-	method iniciarNivel(nuevoNivel){
-		game.addVisual(fondoPortada)
-		game.schedule(5000,{ => self.iniciarNivelAux(nuevoNivel)})
-		game.schedule(5000,{ => game.removeVisual(fondoPortada)})
-	}
-	*/
+	
 	method iniciarNivel(nuevoNivel){
 		tony.points(0)
 		//prueba, despues borrar el golem
@@ -70,6 +64,21 @@ object escenario{
 	
 }
 
+object bloqueado {
+	const bloqueados = (#{game.at(0,0),game.at(1,0),game.at(2,0),game.at(3,0),game.at(4,0),
+	     game.at(5,0),game.at(6,0),game.at(7,0),game.at(8,0),game.at(9,0)})
+	
+	
+	method validarPosicion(espina){
+		if(espina.position().contains(bloqueados)){
+			game.removeVisual(espina)
+			game.removeTickEvent("mover espinas")
+		}else{}
+	}
+}
+
+
+
 class Nivel{
 	var property objetos = []
 	var property objetosExtra = []	
@@ -80,7 +89,7 @@ class Nivel{
 	method configuracionSonido(){}
 	
 	method configuracionTeclado(){
-		keyboard.x().onPressDo { tony.atacar(101) }	
+		keyboard.space().onPressDo { tony.atacar(101) }	
 		keyboard.p().onPressDo {game.say(tony, "Puntaje Total: " + tony.points())}
 		keyboard.w().onPressDo {tony.moverArriba()}
 		keyboard.s().onPressDo {tony.moverAbajo()}
