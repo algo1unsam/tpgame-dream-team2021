@@ -285,9 +285,6 @@ class Espinas inherits Elementos {
 	
 	//if (game.hasVisual(self))
 	
-	method validarPosicion(){
-		
-	} 
 	//game.onCollideDo(tony,{algo => algo.chocasteCon(tony)})
 
 }

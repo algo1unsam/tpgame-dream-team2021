@@ -79,31 +79,12 @@ object tony {
 	}
 	
 	method sigueConVida() = vidas > 0
-	
-	//method poder(){
-	//	game.say(self,"He Aumentado mi poder a :" + poder)
-	//}
-	
+		
 	method addPoints(addPoint){
 		points += addPoint	
 	}
 	
 	method points() = points
 	
-	//method objetosDebajo(codigoTony){
-	//	var objetosDebajo = game.colliders(self)
-	//	return coleccionObjetos.filtrarObjetosPorCodigo(codigoTony,objetosDebajo) 
-	//}
-	
-	//method guardarMoneda(){
-	//	const monedasDebajo = self.objetosDebajo(1)
-	//	
-	//	if(!monedasDebajo.isEmpty()){
-	//		monedasDebajo.forEach({ moneda => self.addPoints(moneda.points())
-	//								game.removeVisual(moneda) })
-	//		}			
-	//	}
-	
-	//method entrarCueva()
 	
 }

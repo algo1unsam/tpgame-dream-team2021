@@ -59,25 +59,8 @@ object escenario{
 		const endGame = new EndGame() 
 		self.iniciarNivel(endGame)
 	}
-	
-	method gameOver(){}
-	
+		
 }
-
-object bloqueado {
-	const bloqueados = (#{game.at(0,0),game.at(1,0),game.at(2,0),game.at(3,0),game.at(4,0),
-	     game.at(5,0),game.at(6,0),game.at(7,0),game.at(8,0),game.at(9,0)})
-	
-	
-	method validarPosicion(espina){
-		if(espina.position().contains(bloqueados)){
-			game.removeVisual(espina)
-			game.removeTickEvent("mover espinas")
-		}else{}
-	}
-}
-
-
 
 class Nivel{
 	var property objetos = []
