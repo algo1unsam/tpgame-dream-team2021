@@ -74,7 +74,7 @@ object tony {
 			vidas -= 1
 			salud = 13						
 		}else{
-			salud = 0	
+			escenario.morirTony()
 		}
 	}
 	

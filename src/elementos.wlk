@@ -61,16 +61,14 @@ class Coin inherits Objetos {
 //Cuando se interactua con la cueva y se cumple la condicion, se modificar el escenario
 //todavía no logré hacer que cambie el fondo con el game.ground("imagen")
 object cueva inherits Elementos {
-
+	
 	var property position = game.at(8, 8)
 
 	override method image() = "entrada_cueva_mejorada.png"
 
 	override method chocasteCon(personaje) {
 		if (personaje.points() > 50) {
-			escenario.removerNivel()
-			var nivel2 = new Nivel2()
-			escenario.iniciarNivel(nivel2)
+			escenario.passNivel()
 		} else {
 			game.say(tony, "Todavía no tengo suficientes monedas")
 		}

@@ -5,7 +5,7 @@ import objetosParaImplementar.*
 import enemigos.*
 
 object escenario{
-	
+	var cont = 1
 	var property nivel
 	/* 	
 	method iniciarNivel(nuevoNivel){
@@ -28,6 +28,16 @@ object escenario{
 		self.nivel(nuevoNivel)
 	}
 	
+	method passNivel(){
+		if(cont == 1){
+			self.removerNivel()
+			const nivel2 = new Nivel2()
+			self.iniciarNivel(nivel2)
+			cont +=1
+		}else{
+			self.ganarTony()
+		}
+	}
 	/* 
 	method configuracionSonido(){
 		if(not "musicaFondo.mpeg".played()){
@@ -44,6 +54,17 @@ object escenario{
 		self.iniciarNivel(nivel)
 	}
 	
+	method morirTony(){
+		self.removerNivel()
+		const gameOver = new GameOver() 
+		self.iniciarNivel(gameOver)
+	}
+	
+	method ganarTony(){
+		self.removerNivel()
+		const endGame = new EndGame() 
+		self.iniciarNivel(endGame)
+	}
 	
 	method gameOver(){}
 	
@@ -120,6 +141,24 @@ class Portada inherits Nivel{
 		escenario.removerNivel()
 		escenario.iniciarNivel(nivel1)
 	}
+}
+
+class GameOver inherits Nivel{
+		
+	override method configuracionFondo(){
+		fondoPortada.imagen("game_over")
+		game.addVisual(fondoPortada)		
+	}
+		
+}
+
+class EndGame inherits Nivel{
+		
+	override method configuracionFondo(){
+		fondoPortada.imagen("end_game")
+		game.addVisual(fondoPortada)		
+	}
+		
 }
 
 class Nivel1 inherits Nivel{
