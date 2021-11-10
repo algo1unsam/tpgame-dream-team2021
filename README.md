@@ -28,7 +28,7 @@ D: Derecha
 
 A: Izquierda
 
-X: Pegar (Ataca al Zombi)
+Space: Pegar (Ataca al Zombi)
 
 P: Tony te dice el puntaje total
 
