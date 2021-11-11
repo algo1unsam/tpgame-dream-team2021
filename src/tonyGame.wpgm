@@ -10,6 +10,9 @@ program TonyGame {
 	game.width(10)
 
 	//Programar evento
+	const sonido = game.sound("sonidos/musica.mp3")
+	game.schedule(200, { sonido.play()} )
+
 	const portada = new Portada()
 	escenario.iniciarNivel(portada)
 
